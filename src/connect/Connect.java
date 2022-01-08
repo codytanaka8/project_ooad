@@ -4,7 +4,7 @@ public final class Connect {
 	
 	private final String USERNAME = "root"; 
 	private final String PASSWORD = ""; 
-	private final String DATABASE = "MrEdagShop"; 
+	private final String DATABASE = "moware"; 
 	private final String HOST = "localhost:3306"; 
 	private final String CONECTION = String.format("jdbc:mysql://%s/%s", HOST, DATABASE);
 	

@@ -2,12 +2,15 @@ package main;
 
 import java.awt.EventQueue;
 
-import controllers.UserController;
+import controller.BillController;
+
+//import controllers.UserController;
 
 public class Main {
 
 	public Main() {
 //		UserController.getInstance().showLoginForm();
+		BillController.getInstance().showAdminView();
 	}
 	
 	public static void main(String[] args) {
