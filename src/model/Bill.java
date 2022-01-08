@@ -1,8 +1,10 @@
 package model;
 
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
 import connect.Connect;
 
@@ -93,6 +95,57 @@ public class Bill {
 		}
 				
 		return null;
+	}
+	
+	public Vector<Bill> getAll(){
+		String query = String.format("SELECT * FROM bill");
+		ResultSet rs = con.executeQuery(query);
+		Vector<Bill> bills = new Vector<>();
+		
+		try {
+			while(rs.next()) {
+				Bill bill = map(rs);
+				bills.add(bill);
+			}
+			return bills;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public boolean insert() {
+		String query = String.format("INSERT INTO bill (employeeId , patientId , DatetimeCreated, PaymentType, Status) VALUES (?, ?, ?, ?, ?)");
+		PreparedStatement ps = con.prepareStatement(query);
+			
+		try {
+			ps.setInt(1, employeeId);
+			ps.setInt(2, patientId);
+			ps.setDate(3, createdAt);
+			ps.setString(4, paymentType);
+			ps.setString(5, "Unpaid");
+			return ps.executeUpdate() == 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean checkout() {
+		String query = String.format("UPDATE bill SET Status=? WHERE id=?");
+		PreparedStatement ps = con.prepareStatement(query);
+		
+		try {
+			ps.setString(1, status);
+			return ps.executeUpdate() == 1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 
 }

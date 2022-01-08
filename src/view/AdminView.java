@@ -1,5 +1,9 @@
 package view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -9,16 +13,18 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import connect.Connect;
+import controller.BillController;
+import model.Bill;
 
 public class AdminView {
 	
 	private JFrame frame;
-	private JTextField nameTextField;
-	private JTextField emailTextField;
-	private JPasswordField passwordField;
-	Vector<Object> tableContent;
+	private JTextField employeeTextField;
+	private JTextField patientTextField, paymentField;
+	Vector<Object> tableContentDoc, tableContentBill;
 
 	private Connect con = Connect.getConnection();
 	private JTable tableDoc, tableBill;
@@ -60,31 +66,31 @@ public class AdminView {
 		lblIdLabel.setBounds(24 , 450 , 61 , 16);
 		frame.getContentPane().add(lblIdLabel);
 
-		JLabel lblNameLabel = new JLabel("Employee");
-		lblNameLabel.setBounds(24, 473, 101, 16);
-		frame.getContentPane().add(lblNameLabel);
+//		JLabel lblEmployeeLabel = new JLabel("Employee");
+//		lblEmployeeLabel.setBounds(24, 473, 101, 16);
+//		frame.getContentPane().add(lblEmployeeLabel);
 
-		nameTextField = new JTextField();
-		nameTextField.setBounds(161, 468, 170, 26);
-		frame.getContentPane().add(nameTextField);
-		nameTextField.setColumns(10);
+//		employeeTextField = new JTextField();
+//		employeeTextField.setBounds(161, 468, 170, 26);
+//		frame.getContentPane().add(employeeTextField);
+//		employeeTextField.setColumns(10);
 
-		JLabel lblNewLabel = new JLabel("Patient");
-		lblNewLabel.setBounds(24, 514, 101, 16);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel lblPatientLabel = new JLabel("Patient ID");
+		lblPatientLabel.setBounds(24, 514, 101, 16);
+		frame.getContentPane().add(lblPatientLabel);
 
-		emailTextField = new JTextField();
-		emailTextField.setBounds(161, 509, 170, 26);
-		frame.getContentPane().add(emailTextField);
-		emailTextField.setColumns(10);
+		patientTextField = new JTextField();
+		patientTextField.setBounds(161, 509, 170, 26);
+		frame.getContentPane().add(patientTextField);
+		patientTextField.setColumns(10);
 
-		JLabel lblPasswordLabel_1 = new JLabel("Payment Type");
-		lblPasswordLabel_1.setBounds(24, 562, 101, 16);
-		frame.getContentPane().add(lblPasswordLabel_1);
+		JLabel lblPaymentLabel = new JLabel("Payment Type");
+		lblPaymentLabel.setBounds(24, 562, 101, 16);
+		frame.getContentPane().add(lblPaymentLabel);
 
-		passwordField = new JPasswordField();
-		passwordField.setBounds(161, 557, 170, 26);
-		frame.getContentPane().add(passwordField);
+		paymentField = new JTextField();
+		paymentField.setBounds(161, 557, 170, 26);
+		frame.getContentPane().add(paymentField);
 
 		JButton btnCheckoutButton = new JButton("Checkout");
 		btnCheckoutButton.setBounds(24, 625, 117, 29);
@@ -107,10 +113,88 @@ public class AdminView {
 		frame.getContentPane().add(btnLogoutButton);
 		
 		loadData();
+		
+		tableBill.addMouseListener(new MouseListener() {
+						
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int row = 0;
+				row = tableBill.getSelectedRow();
+				lblIdLabel.setText(""+tableBill.getValueAt(row, 0));
+				patientTextField.setText(""+tableBill.getValueAt(row, 2));
+				paymentField.setText(""+tableBill.getValueAt(row, 4));
+			}
+			
+			public void mousePressed(MouseEvent e) {}
+			public void mouseReleased(MouseEvent e) {}
+			public void mouseEntered(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {}
+		});
+		
+		btnCheckoutButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String id = lblIdLabel.getText();
+				
+				loadData();
+			}
+		});
+		
+		btnAddButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String patientId = patientTextField.getText();
+				String paymentType = paymentField.getText();
+			}
+		});
+		
+		btnResetButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblIdLabel.setText("");
+				patientTextField.setText("");
+				paymentField.setText("");
+			}
+		});
+		
+		btnLogoutButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				new LoginView();
+			}
+		});
 	}
 	
 	public void loadData() {
+		String headerDoc[] = {"ID", "Name", "Status"};
+		DefaultTableModel dtmDoc = new DefaultTableModel(headerDoc, 0);
 		
+		//Vector<Employee> doctors = 
+		
+		tableDoc.setModel(dtmDoc);
+		
+		String headerBill[] = {"ID", "Employee", "Patient", "Date", "Payment", "Status"};
+		DefaultTableModel dtmBill = new DefaultTableModel(headerBill, 0);
+		
+		Vector<Bill> bills = BillController.getInstance().getAll();
+		for(Bill bill : bills) {
+			tableContentBill = new Vector<>();
+			tableContentBill.add(bill.getId());
+			tableContentBill.add(bill.getEmployeeId());
+			tableContentBill.add(bill.getPatientId());
+			tableContentBill.add(bill.getCreatedAt());
+			tableContentBill.add(bill.getPaymentType());
+			tableContentBill.add(bill.getStatus());
+			
+			dtmBill.addRow(tableContentBill);
+		}
+		
+		tableBill.setModel(dtmBill);
 	}
 
 }

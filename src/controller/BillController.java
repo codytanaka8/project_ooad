@@ -1,10 +1,14 @@
 package controller;
 
+import java.util.Vector;
+
+import model.Bill;
 import view.AdminView;
 
 public class BillController {
 	
 	public static BillController controller;
+	private Bill bill;
 
 	private BillController() {
 		
@@ -20,6 +24,18 @@ public class BillController {
 	
 	public void showAdminView() {
 		new AdminView();
+	}
+	
+	public Vector<Bill> getAll(){
+		return bill.getAll();
+	}
+	
+	public boolean insert() {
+		return false;
+	}
+	
+	public boolean checkout() {
+		return false;
 	}
 
 }
