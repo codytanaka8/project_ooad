@@ -125,7 +125,7 @@ public class Bill {
 			ps.setInt(2, patientId);
 			ps.setDate(3, createdAt);
 			ps.setString(4, paymentType);
-			ps.setString(5, "Unpaid");
+			ps.setString(5, status);
 			return ps.executeUpdate() == 1;
 		} catch (SQLException e) {
 			e.printStackTrace();

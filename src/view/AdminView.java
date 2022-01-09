@@ -9,6 +9,7 @@ import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -137,6 +138,12 @@ public class AdminView {
 			public void actionPerformed(ActionEvent e) {
 				String id = lblIdLabel.getText();
 				
+				if(BillController.getInstance().checkout(id)) {
+					JOptionPane.showMessageDialog(null, "Checkout success!");
+				}
+				else {
+					JOptionPane.showMessageDialog(null, BillController.getInstance().getErrorMsg(), "Error Message", JOptionPane.ERROR_MESSAGE);
+				}
 				loadData();
 			}
 		});
@@ -147,6 +154,14 @@ public class AdminView {
 			public void actionPerformed(ActionEvent e) {
 				String patientId = patientTextField.getText();
 				String paymentType = paymentField.getText();
+				
+				if(BillController.getInstance().insert(0, patientId, paymentType)) {
+					JOptionPane.showMessageDialog(null, "Insert bill success!");
+				}
+				else {
+					JOptionPane.showMessageDialog(null, BillController.getInstance().getErrorMsg(), "Error Message", JOptionPane.ERROR_MESSAGE);
+				}
+				loadData();
 			}
 		});
 		
@@ -182,16 +197,18 @@ public class AdminView {
 		DefaultTableModel dtmBill = new DefaultTableModel(headerBill, 0);
 		
 		Vector<Bill> bills = BillController.getInstance().getAll();
-		for(Bill bill : bills) {
-			tableContentBill = new Vector<>();
-			tableContentBill.add(bill.getId());
-			tableContentBill.add(bill.getEmployeeId());
-			tableContentBill.add(bill.getPatientId());
-			tableContentBill.add(bill.getCreatedAt());
-			tableContentBill.add(bill.getPaymentType());
-			tableContentBill.add(bill.getStatus());
-			
-			dtmBill.addRow(tableContentBill);
+		if(bills != null) {
+			for(Bill bill : bills) {
+				tableContentBill = new Vector<>();
+				tableContentBill.add(bill.getId());
+				tableContentBill.add(bill.getEmployeeId());
+				tableContentBill.add(bill.getPatientId());
+				tableContentBill.add(bill.getCreatedAt());
+				tableContentBill.add(bill.getPaymentType());
+				tableContentBill.add(bill.getStatus());
+				
+				dtmBill.addRow(tableContentBill);
+			}
 		}
 		
 		tableBill.setModel(dtmBill);
