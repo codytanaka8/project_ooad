@@ -9,7 +9,7 @@ import controller.BillController;
 public class Main {
 
 	public Main() {
-//		UserController.getInstance().showLoginForm();
+	//	UserController.getInstance().showLoginForm();
 		BillController.getInstance().showAdminView();
 	}
 	
