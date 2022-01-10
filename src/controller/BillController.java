@@ -5,7 +5,9 @@ import java.time.LocalDate;
 import java.util.Vector;
 
 import model.Bill;
+import model.BillDetail;
 import view.AdminView;
+import view.BillDetailView;
 
 public class BillController {
 	
@@ -33,8 +35,25 @@ public class BillController {
 		new AdminView();
 	}
 	
+	public void showBillDetailView(String id) {
+		new BillDetailView(id);
+	}
+	
 	public Vector<Bill> getAll(){
 		return bill.getAll();
+	}
+	
+	public Vector<BillDetail> getAllDetailById(String id){
+		int idInt = -1;
+		try {
+			idInt = Integer.parseInt(id);
+		} catch (NumberFormatException e) {
+			errorMsg = "No data";
+			return null;
+		}
+		
+		bill = new Bill(idInt, 0, 0, null, "", "");
+		return bill.getBillDetail().getAllDetailById();
 	}
 	
 	public boolean insert(int employeeId, String patientId, String paymentType) {

@@ -116,6 +116,10 @@ public class Bill {
 		return null;
 	}
 	
+	public BillDetail getBillDetail() {
+		return new BillDetail(0, id, 0, 0);
+	}
+	
 	public boolean insert() {
 		String query = String.format("INSERT INTO bill (employeeId , patientId , DatetimeCreated, PaymentType, Status) VALUES (?, ?, ?, ?, ?)");
 		PreparedStatement ps = con.prepareStatement(query);

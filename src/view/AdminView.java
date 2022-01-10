@@ -165,6 +165,16 @@ public class AdminView {
 			}
 		});
 		
+		btnDetailButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String id = lblIdLabel.getText();
+				BillController.getInstance().showBillDetailView(id);
+				frame.dispose();
+			}
+		});
+		
 		btnResetButton.addActionListener(new ActionListener() {
 			
 			@Override
