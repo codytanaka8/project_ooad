@@ -8,6 +8,8 @@ import java.util.Vector;
 
 import connect.Connect;
 
+import java.sql.SQLException;
+
 public class Employee {
 	
 	private int employeeId;
@@ -22,7 +24,32 @@ public class Employee {
 	public Employee() {
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	public Employee(String username, String userPassword) {
+		this.name = username;
+		this.password = userPassword;
+	}
+	
+	public Employee find() {
+		String query = String.format("SELECT * FROM employee WHERE Username = ? AND Password = ?");
+		PreparedStatement ps = con.prepareStatement(query);
+		
+		try {
+			ps.setString(1, name);
+			ps.setString(2, password);
+			ResultSet rs = ps.executeQuery();
+			if(rs.first()) {				
+				Employee em = new Employee();
+				em.name=rs.getString("Username");
+				em.employeeId=rs.getInt("EmployeeID");
+				return em;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 
 	public Employee(int employeeId, int roleId, String name, String password, int salary, String status) {
 		super();
