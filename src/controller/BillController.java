@@ -78,11 +78,11 @@ public class BillController {
 			errorMsg = "Employee and Patient ID must be integer!";
 			return false;
 		}
-		/*
-		if(econ.getEmployee(strEmployeeId) == null) {
+		
+		if(econ.getEmployee(employeeId) == null) {
 			errorMsg = "Employee does not exist!";
 			return false;
-		}
+		}/*
 		else if(pcon.getPatient(strPatientId)==null) {
 			errorMsg = "Patient does not exist!";
 			return false;

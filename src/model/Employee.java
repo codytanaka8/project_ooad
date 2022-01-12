@@ -296,7 +296,7 @@ public class Employee {
 	
 	//getdoctor list (incomplete)
 	public Vector<Employee> getDoctorList(){
-		String query = String.format("SELECT * FROM employee WHERE RoleId=");
+		String query = String.format("SELECT * FROM employee WHERE RoleId=3");
 		ResultSet rs = con.executeQuery(query);
 		Vector<Employee> users = new Vector<>();
 		try {
