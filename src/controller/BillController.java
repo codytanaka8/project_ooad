@@ -12,11 +12,17 @@ import view.BillDetailView;
 public class BillController {
 	
 	public static BillController controller;
+	public static PatientController pcon;
+	public static EmployeeController econ;
+	public static MedController mcon;
 	private Bill bill;
 	private String errorMsg = "";
 
 	private BillController() {
 		bill = new Bill();
+		pcon = PatientController.getInstance();
+		econ = EmployeeController.getInstance();
+		mcon = MedController.getInstance();
 	}
 	
 	public String getErrorMsg() {
@@ -62,11 +68,23 @@ public class BillController {
 		return bill.getBillDetail().getAllDetailById();
 	}
 	
-	public boolean insert(int employeeId, String patientId, String paymentType) {
+	public boolean insert(String strEmployeeId, String strPatientId, String paymentType) {
 		Date createdAt = Date.valueOf(LocalDate.now());
+		int employeeId, patientId = -1;
+		try {
+			employeeId = Integer.parseInt(strEmployeeId);
+			patientId = Integer.parseInt(strPatientId);
+		} catch (NumberFormatException e) {
+			errorMsg = "Employee and Patient ID must be integer!";
+			return false;
+		}
 		/*
-		if(getEmployee(employeeId) == null) {
+		if(econ.getEmployee(strEmployeeId) == null) {
 			errorMsg = "Employee does not exist!";
+			return false;
+		}
+		else if(pcon.getPatient(strPatientId)==null) {
+			errorMsg = "Patient does not exist!";
 			return false;
 		}
 		else {
@@ -80,6 +98,8 @@ public class BillController {
 			return inserted;
 		}
 		*/
+		
+		
 		return false;
 	}
 	
@@ -113,6 +133,15 @@ public class BillController {
 			return false;
 		}
 		
+		if(mcon.getMed(medId)==null) {
+			errorMsg = "Medicine does not exist!";
+			return false;
+		}
+		if(!(qty>0)) {
+			errorMsg = "Medicine quantity must be more than 0!";
+			return false;
+		}
+		
 		bill = new Bill(billId, 0, 0, null, "", "");
 		bill.getBillDetail().setMedId(medId);
 		bill.getBillDetail().setQty(qty);
@@ -131,6 +160,15 @@ public class BillController {
 			qty = Integer.parseInt(strQty);
 		} catch (NumberFormatException e) {
 			errorMsg = "Update failed! ID and Qty must be numeric!";
+			return false;
+		}
+		
+		if(mcon.getMed(medId)==null) {
+			errorMsg = "Medicine does not exist!";
+			return false;
+		}
+		if(!(qty>0)) {
+			errorMsg = "Medicine quantity must be more than 0!";
 			return false;
 		}
 		

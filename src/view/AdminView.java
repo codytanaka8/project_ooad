@@ -156,7 +156,7 @@ public class AdminView {
 				String patientId = patientTextField.getText();
 				String paymentType = paymentField.getText();
 				
-				if(BillController.getInstance().insert(0, patientId, paymentType)) {
+				if(BillController.getInstance().insert("", patientId, paymentType)) {
 					JOptionPane.showMessageDialog(null, "Insert bill success!");
 				}
 				else {
