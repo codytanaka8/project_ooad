@@ -9,6 +9,7 @@ import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -25,7 +26,6 @@ public class BillDetailView {
 	Vector<Object> tableContent;
 	private String billId;
 	
-	private Connect con = Connect.getConnection();
 	private JTable table;
 
 	public BillDetailView(String id) {
@@ -112,8 +112,16 @@ public class BillDetailView {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				String medId = medTextField.getText();
+				String qty = qtyTextField.getText();
 				
+				if(BillController.getInstance().insertDetail(billId, medId, qty)) {
+					JOptionPane.showMessageDialog(null, "Insert success!");
+				}
+				else {
+					JOptionPane.showMessageDialog(null, BillController.getInstance().getErrorMsg(), "Error Message", JOptionPane.ERROR_MESSAGE);
+				}
+				loadData();
 			}
 		});
 		
@@ -121,8 +129,15 @@ public class BillDetailView {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				String detailId = lblIdLabel.getText();
 				
+				if(BillController.getInstance().deleteDetail(detailId)) {
+					JOptionPane.showMessageDialog(null, "Delete success!");
+				}
+				else {
+					JOptionPane.showMessageDialog(null, BillController.getInstance().getErrorMsg(), "Error Message", JOptionPane.ERROR_MESSAGE);
+				}
+				loadData();
 			}
 		});
 		
@@ -130,8 +145,17 @@ public class BillDetailView {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				String detailId = lblIdLabel.getText();
+				String medId = medTextField.getText();
+				String qty = qtyTextField.getText();
 				
+				if(BillController.getInstance().updateDetail(detailId, medId, qty)) {
+					JOptionPane.showMessageDialog(null, "Update success!");
+				}
+				else {
+					JOptionPane.showMessageDialog(null, BillController.getInstance().getErrorMsg(), "Error Message", JOptionPane.ERROR_MESSAGE);
+				}
+				loadData();
 			}
 		});
 		

@@ -95,5 +95,50 @@ public class BillDetail {
 		
 		return null;
 	}
+	
+	public boolean insert() {
+		String query = String.format("INSERT INTO bill_detail (Bill_ID, MedicineID, Quantity) VALUES (?, ?, ?)");
+		PreparedStatement ps = con.prepareStatement(query);
+			
+		try {
+			ps.setInt(1, billId);
+			ps.setInt(2, medId);
+			ps.setInt(3, qty);
+			return ps.executeUpdate() == 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean update() {
+		String query = String.format("UPDATE bill_detail SET MedicineID=? , Quantity=? WHERE BillDetail_ID=?");
+		PreparedStatement ps = con.prepareStatement(query);
+			
+		try {
+			ps.setInt(1, medId);
+			ps.setInt(2, qty);
+			ps.setInt(3, id);
+			return ps.executeUpdate() == 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	public boolean delete() {
+		String query = String.format("DELETE FROM bill_detail WHERE BillDetail_ID=?");
+		PreparedStatement ps = con.prepareStatement(query);
+		
+		try {
+			ps.setInt(1, id);
+			return ps.executeUpdate() == 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 
 }
