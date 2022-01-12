@@ -27,7 +27,6 @@ public class AdminView {
 	private JTextField patientTextField, paymentField;
 	Vector<Object> tableContentDoc, tableContentBill;
 
-	private Connect con = Connect.getConnection();
 	private JTable tableDoc, tableBill;
 
 	public AdminView() {

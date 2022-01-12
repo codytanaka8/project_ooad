@@ -96,4 +96,65 @@ public class BillController {
 		return updated;
 	}
 
+	public boolean insertDetail(String strBillId, String strMedId, String strQty) {
+		int billId, medId, qty = -1;
+		try {
+			billId = Integer.parseInt(strBillId);
+			medId = Integer.parseInt(strMedId);
+			qty = Integer.parseInt(strQty);
+		} catch (NumberFormatException e) {
+			errorMsg = "Insert failed! ID and Qty must be numeric!";
+			return false;
+		}
+		
+		bill = new Bill(billId, 0, 0, null, "", "");
+		bill.getBillDetail().setMedId(medId);
+		bill.getBillDetail().setQty(qty);
+		boolean inserted = bill.getBillDetail().insert();
+		
+		if(!inserted) errorMsg = "Insert failed!";
+		
+		return inserted;
+	}
+	
+	public boolean updateDetail(String id, String strMedId, String strQty) {
+		int detailId, medId, qty = -1;
+		try {
+			detailId = Integer.parseInt(id);
+			medId = Integer.parseInt(strMedId);
+			qty = Integer.parseInt(strQty);
+		} catch (NumberFormatException e) {
+			errorMsg = "Update failed! ID and Qty must be numeric!";
+			return false;
+		}
+		
+		bill = new Bill(detailId, 0, 0, null, "", "");
+		bill.getBillDetail().setId(detailId);
+		bill.getBillDetail().setMedId(medId);
+		bill.getBillDetail().setQty(qty);
+		boolean updated = bill.getBillDetail().update();
+		
+		if(!updated) errorMsg = "Update failed!";
+		
+		return updated;
+	}
+	
+	public boolean deleteDetail(String strDetailId) {
+		int id = -1;
+		try {
+			id = Integer.parseInt(strDetailId);
+		} catch (NumberFormatException e) {
+			errorMsg = "ID must be numeric";
+			return false;
+		}
+		
+		bill = new Bill(0, 0, 0, null, "", "");
+		bill.getBillDetail().setId(id);
+		boolean deleted = bill.getBillDetail().delete();
+		
+		if(!deleted) errorMsg = "Delete failed!";
+		
+		return deleted;
+	}
+	
 }

@@ -62,9 +62,7 @@ public class Role {
 			ps.setInt(1, roleID);
 			rs = ps.executeQuery();
 			Role role;
-			//jika ada datanya
 			if(rs.first()){
-				//rs dari query -> jadi object user
 				role = map(rs);
 				return role;
 			}
