@@ -88,6 +88,11 @@ public class InsertEmployeeView extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == insertButton) {
+			if(usernameField.getText().equals("")||roleField.getText().equals("")||namaField.getText().equals("")||salaryField.getText().equals("")||passField.getText().equals("")||statusField.getText().equals("")){
+				JOptionPane.showMessageDialog(this, "Inputs cant be empty");
+			}
+			
+			
 			int roleid=Integer.parseInt(roleField.getText());
 			boolean success = EmployeeController.getInstance().addEmployee(roleid,namaField.getText(),usernameField.getText(),salaryField.getText(),passField.getText(),statusField.getText());
 			

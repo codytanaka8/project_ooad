@@ -6,7 +6,7 @@ public class LoginController {
 	
 	public static LoginController controller;
 	public LoginController() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public void showLoginForm() {

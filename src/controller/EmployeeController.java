@@ -13,7 +13,26 @@ public class EmployeeController {
 	Employee employee;
 	
 	public boolean addEmployee(int roleID,String name,String username,String salary,String password,String status){
-		int salarydigit=Integer.parseInt(salary);
+		int salarydigit;
+		try {
+			salarydigit = Integer.parseInt(salary);
+		} catch (NumberFormatException e) {
+			this.errorMessage = "Salary must be numeric";
+			return false;
+		}
+		
+		if(name.length()<=0||username.length()<=0||salary.length()<=0||password.length()<=0||status.length()<=0){
+			this.errorMessage = "Please fill all of the input";
+			return false;
+		}
+		else if(salarydigit<=0){
+			this.errorMessage = "Salary must be above 0";
+			return false;
+		}else if(!status.equals("Active")&&!status.equals("Inactive")){
+			this.errorMessage = "Status must only be Active or Inactive";
+			return false;
+		}
+		
 		Employee em=new Employee(roleID, name, username, salarydigit,password, status);
 		em=em.insertEmployee();
 		
@@ -62,6 +81,7 @@ public class EmployeeController {
 	public String getErrorMessage() {
 		return errorMessage;
 	}
+	
 
 	public boolean fireEmployee(int employeeID) {
 		Employee em = new Employee();
@@ -73,6 +93,37 @@ public class EmployeeController {
 		}
 		return success;
 		
+	}
+	
+	public boolean updateEmployee(int employeeID,int roleID,String name,String salary){
+		int salarydigit;
+		try {
+			salarydigit = Integer.parseInt(salary);
+		} catch (NumberFormatException e) {
+			this.errorMessage = "Salary must be numeric";
+			return false;
+		}
+		
+		if(name.length()<=0||salary.length()<=0){
+			this.errorMessage = "Please fill all of the input";
+			return false;
+		}
+		else if(salarydigit<=0){
+			this.errorMessage = "Salary must be above 0";
+			return false;
+		}else if(roleID>99){
+			this.errorMessage = "invalid role id";
+			return false;
+		}
+		
+		Employee em=new Employee();
+		em=em.getEmployee(employeeID);
+		em.setRoleId(roleID);
+		em.setName(name);
+		em.setSalary(salarydigit);
+		em.updateEmployee();
+
+		return true;
 	}
 
 }
