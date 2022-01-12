@@ -18,7 +18,9 @@ import javax.swing.table.DefaultTableModel;
 
 import connect.Connect;
 import controller.BillController;
+import controller.EmployeeController;
 import model.Bill;
+import model.Employee;
 
 public class AdminView {
 	
@@ -169,8 +171,10 @@ public class AdminView {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String id = lblIdLabel.getText();
-				BillController.getInstance().showBillDetailView(id);
-				frame.dispose();
+				if(id!="ID") {
+					BillController.getInstance().showBillDetailView(id);
+					frame.dispose();
+				}
 			}
 		});
 		
@@ -198,7 +202,7 @@ public class AdminView {
 		String headerDoc[] = {"ID", "Name", "Status"};
 		DefaultTableModel dtmDoc = new DefaultTableModel(headerDoc, 0);
 		
-		//Vector<Employee> doctors = 
+		//Vector<Employee> doctors = EmployeeController.getInstance().getAll();
 		
 		tableDoc.setModel(dtmDoc);
 		

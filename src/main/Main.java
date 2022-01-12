@@ -11,8 +11,8 @@ public class Main {
 
 	public Main() {
 		//UserController.getInstance().showLoginForm();
-		//BillController.getInstance().showAdminView();
-		LoginController.getInstance().showLoginForm();
+		BillController.getInstance().showAdminView();
+		//LoginController.getInstance().showLoginForm();
 	}
 	
 	public static void main(String[] args) {

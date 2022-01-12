@@ -16,7 +16,7 @@ public class BillController {
 	private String errorMsg = "";
 
 	private BillController() {
-		
+		bill = new Bill();
 	}
 	
 	public String getErrorMsg() {
@@ -36,7 +36,13 @@ public class BillController {
 	}
 	
 	public void showBillDetailView(String id) {
-		new BillDetailView(id);
+		int idInt = -1;
+		try {
+			idInt = Integer.parseInt(id);
+			new BillDetailView(id);
+		} catch (NumberFormatException e) {
+			errorMsg = "No data";
+		}
 	}
 	
 	public Vector<Bill> getAll(){
