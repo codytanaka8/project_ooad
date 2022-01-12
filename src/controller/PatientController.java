@@ -6,6 +6,7 @@ import java.util.Vector;
 import model.Bill;
 import model.Patient;
 import model.PatientDetail;
+import view.DoctorView;
 
 
 
@@ -26,6 +27,10 @@ public class PatientController {
 			controller = new PatientController();
 		}
 		return controller;
+	}
+	
+	public void showDoctorView(){
+		new DoctorView();
 	}
 	
 	public String getErrorMessage() {
