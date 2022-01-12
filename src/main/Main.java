@@ -3,19 +3,16 @@ package main;
 import java.awt.EventQueue;
 
 import controller.BillController;
-import controller.HrController;
 import controller.LoginController;
-import view.AdminView;
-import view.HrView;
-import view.InsertEmployeeView;
 
 //import controllers.UserController;
 
 public class Main {
 
 	public Main() {
-//		new InsertEmployeeView();
-		HrController.getInstance().showHrPage();
+		//UserController.getInstance().showLoginForm();
+		//BillController.getInstance().showAdminView();
+		LoginController.getInstance().showLoginForm();
 	}
 	
 	public static void main(String[] args) {

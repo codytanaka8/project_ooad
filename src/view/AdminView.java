@@ -18,7 +18,9 @@ import javax.swing.table.DefaultTableModel;
 
 import connect.Connect;
 import controller.BillController;
+import controller.EmployeeController;
 import model.Bill;
+import model.Employee;
 
 public class AdminView {
 	
@@ -27,7 +29,6 @@ public class AdminView {
 	private JTextField patientTextField, paymentField;
 	Vector<Object> tableContentDoc, tableContentBill;
 
-	private Connect con = Connect.getConnection();
 	private JTable tableDoc, tableBill;
 
 	public AdminView() {
@@ -67,6 +68,14 @@ public class AdminView {
 		lblIdLabel.setBounds(24 , 450 , 61 , 16);
 		frame.getContentPane().add(lblIdLabel);
 
+//		JLabel lblEmployeeLabel = new JLabel("Employee");
+//		lblEmployeeLabel.setBounds(24, 473, 101, 16);
+//		frame.getContentPane().add(lblEmployeeLabel);
+
+//		employeeTextField = new JTextField();
+//		employeeTextField.setBounds(161, 468, 170, 26);
+//		frame.getContentPane().add(employeeTextField);
+//		employeeTextField.setColumns(10);
 
 		JLabel lblPatientLabel = new JLabel("Patient ID");
 		lblPatientLabel.setBounds(24, 514, 101, 16);
@@ -147,7 +156,7 @@ public class AdminView {
 				String patientId = patientTextField.getText();
 				String paymentType = paymentField.getText();
 				
-				if(BillController.getInstance().insert(0, patientId, paymentType)) {
+				if(BillController.getInstance().insert("", patientId, paymentType)) {
 					JOptionPane.showMessageDialog(null, "Insert bill success!");
 				}
 				else {
@@ -162,8 +171,10 @@ public class AdminView {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String id = lblIdLabel.getText();
-				BillController.getInstance().showBillDetailView(id);
-				frame.dispose();
+				if(id!="ID") {
+					BillController.getInstance().showBillDetailView(id);
+					frame.dispose();
+				}
 			}
 		});
 		
@@ -191,7 +202,7 @@ public class AdminView {
 		String headerDoc[] = {"ID", "Name", "Status"};
 		DefaultTableModel dtmDoc = new DefaultTableModel(headerDoc, 0);
 		
-		//Vector<Employee> doctors = 
+		//Vector<Employee> doctors = EmployeeController.getInstance().getAll();
 		
 		tableDoc.setModel(dtmDoc);
 		
