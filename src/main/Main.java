@@ -3,6 +3,7 @@ package main;
 import java.awt.EventQueue;
 
 import controller.BillController;
+import controller.LoginController;
 
 //import controllers.UserController;
 
@@ -10,7 +11,8 @@ public class Main {
 
 	public Main() {
 	//	UserController.getInstance().showLoginForm();
-		BillController.getInstance().showAdminView();
+//		BillController.getInstance().showAdminView();
+		LoginController.getInstance().showLoginForm();
 	}
 	
 	public static void main(String[] args) {
