@@ -67,14 +67,6 @@ public class AdminView {
 		lblIdLabel.setBounds(24 , 450 , 61 , 16);
 		frame.getContentPane().add(lblIdLabel);
 
-//		JLabel lblEmployeeLabel = new JLabel("Employee");
-//		lblEmployeeLabel.setBounds(24, 473, 101, 16);
-//		frame.getContentPane().add(lblEmployeeLabel);
-
-//		employeeTextField = new JTextField();
-//		employeeTextField.setBounds(161, 468, 170, 26);
-//		frame.getContentPane().add(employeeTextField);
-//		employeeTextField.setColumns(10);
 
 		JLabel lblPatientLabel = new JLabel("Patient ID");
 		lblPatientLabel.setBounds(24, 514, 101, 16);
