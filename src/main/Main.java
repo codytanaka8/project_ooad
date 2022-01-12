@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import controller.BillController;
 import controller.LoginController;
+import view.HrView;
 
 //import controllers.UserController;
 
@@ -12,7 +13,8 @@ public class Main {
 	public Main() {
 		//UserController.getInstance().showLoginForm();
 		//BillController.getInstance().showAdminView();
-		LoginController.getInstance().showLoginForm();
+		new HrView();
+//		LoginController.getInstance().showLoginForm();
 	}
 	
 	public static void main(String[] args) {

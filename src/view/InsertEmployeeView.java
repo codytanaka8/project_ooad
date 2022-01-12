@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controller.EmployeeController;
+import model.Employee;
 
 public class InsertEmployeeView extends JFrame implements ActionListener{
 	JTextField namaField;
@@ -30,7 +31,7 @@ public class InsertEmployeeView extends JFrame implements ActionListener{
 		init();
 	}
 	JButton insertButton;
-	
+	private String errorMessage = "";
 	public void init(){
 		setLayout(new BorderLayout());
 		JPanel panelnorth =new JPanel();
@@ -84,10 +85,46 @@ public class InsertEmployeeView extends JFrame implements ActionListener{
 		setTitle("Moware");
 		insertButton.addActionListener(this);
 	}
+	
+	public boolean addEmployee(int roleID,String name,String username,String salary,String password,String status){
+		int salarydigit;
+		try {
+			salarydigit = Integer.parseInt(salary);
+		} catch (NumberFormatException e) {
+			this.errorMessage = "Salary must be numeric";
+			return false;
+		}
+		
+		if(name.length()<=0||username.length()<=0||salary.length()<=0||password.length()<=0||status.length()<=0){
+			this.errorMessage = "Please fill all of the input";
+			return false;
+		}
+		else if(salarydigit<=0){
+			this.errorMessage = "Salary must be above 0";
+			return false;
+		}else if(!status.equals("Active")&&!status.equals("Inactive")){
+			this.errorMessage = "Status must only be Active or Inactive";
+			return false;
+		}
+		
+		Employee em=new Employee(roleID, name, username, salarydigit,password, status);
+		em=em.insertEmployee();
+		
+		if(em == null) {
+			this.errorMessage = "Insert Employee Failed";
+			return false;
+		}
+		return true;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == insertButton) {
+			if(usernameField.getText().equals("")||roleField.getText().equals("")||namaField.getText().equals("")||salaryField.getText().equals("")||passField.getText().equals("")||statusField.getText().equals("")){
+				JOptionPane.showMessageDialog(this, "Inputs cant be empty");
+			}
+			
+			
 			int roleid=Integer.parseInt(roleField.getText());
 			boolean success = EmployeeController.getInstance().addEmployee(roleid,namaField.getText(),usernameField.getText(),salaryField.getText(),passField.getText(),statusField.getText());
 			

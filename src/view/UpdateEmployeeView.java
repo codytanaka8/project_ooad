@@ -11,9 +11,12 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controller.BillController;
+import controller.EmployeeController;
 import model.Employee;
 
 public class UpdateEmployeeView extends JFrame implements ActionListener {
@@ -84,14 +87,21 @@ public class UpdateEmployeeView extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == updateButton) {
-			Employee em=new Employee();
-			em=em.getEmployee(Integer.parseInt(idField.getText()));
-			em.setRoleId(Integer.parseInt(roleField.getText()));
-			em.setName(nameField.getText());
-			em.setSalary(Integer.parseInt(salaryField.getText()));
-			em.updateEmployee();
+			if(idField.getText().equals("")||roleField.getText().equals("")||nameField.getText().equals("")||salaryField.getText().equals("")){
+				JOptionPane.showMessageDialog(this, "Inputs cant be empty");
+			}
 			
-			System.out.println(em.getName()+em.getSalary());
+			Boolean a=EmployeeController.getInstance().updateEmployee(Integer.parseInt(idField.getText()), Integer.parseInt(roleField.getText()), nameField.getText(), salaryField.getText());
+			
+			if(a) {
+				JOptionPane.showMessageDialog(this, "Update Success!");
+				this.dispose();
+				new HrView();
+			}
+			else {
+				JOptionPane.showMessageDialog(this, EmployeeController.getInstance().getErrorMessage());
+			}
+			
 			this.dispose();
 			new HrView();
 		
