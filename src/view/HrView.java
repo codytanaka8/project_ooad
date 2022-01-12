@@ -123,8 +123,9 @@ public class HrView extends JFrame implements ActionListener {
 		tabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+//				System.out.println(tabel.getSelectedColumn());
 				if(tabel.getSelectedColumn()==5) {
-
+//					System.out.println("FIVE");
 					int row = tabel.getSelectedRow();
 					int employeeID=(int) tabel.getValueAt(row,0);
 					EmployeeController.getInstance().fireEmployee(employeeID);
@@ -145,6 +146,18 @@ public class HrView extends JFrame implements ActionListener {
 				new InsertEmployeeView();
 			
 		}else if(e.getSource() == updateButton) {
+			
+//			for (Employee em : employeeList) {
+//
+//				for (int i = 0; i < tabel.getRowCount(); i++) {  // Loop rows
+//
+//					em.setRoleId(Integer.parseInt(tabel.getValueAt(i, 1).toString()));
+//					em.setName((String) tabel.getValueAt(i, 2).toString());
+//					em.setSalary(Integer.parseInt(tabel.getValueAt(i, 3).toString()));
+//					em.updateEmployee();
+//			     }
+//				
+//			}
 
 			this.dispose();
 			new UpdateEmployeeView();

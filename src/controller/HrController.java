@@ -5,7 +5,6 @@ import view.HrView;
 public class HrController {
 
 	public static HrController controller;
-	private String errorMessage = "";
 	public HrController() {
 		// TODO Auto-generated constructor stub
 	}
