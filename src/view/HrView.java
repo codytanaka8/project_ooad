@@ -153,3 +153,4 @@ public class HrView extends JFrame implements ActionListener {
 	}
 
 }
+
