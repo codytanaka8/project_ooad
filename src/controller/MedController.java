@@ -12,8 +12,8 @@ public class MedController {
 	private Medicine med;
 	private String errorMsg = "";
 	
-	public MedController() {
-//		med = new Medicine();
+	private MedController() {
+		med = new Medicine();
 	}
 	
 	public static MedController getInstance() {
@@ -23,6 +23,9 @@ public class MedController {
 		}
 		return controller;
 	}
+	public String getErrorMsg() {
+		return errorMsg;
+	}
 	
 	public void showPharmacistView() {
 		new PharmacistView();
@@ -30,6 +33,9 @@ public class MedController {
 	
 	public Medicine getMed(String name) {
 		return med.getMed(name);
+	}
+	public Medicine getMed(int id) {
+		return med.getMed(id);
 	}
 	
 	
@@ -58,6 +64,43 @@ public class MedController {
 			}
 			
 			return inserted;
-		}
+			}
 	}
+	
+	public boolean update(String id, String name, int price, int qty) {
+		//validation
+		int tempqty = -1;
+		if(id.isEmpty() && name.isEmpty()) {
+			errorMsg = "Name and id must be filled!";
+			return false;
+			
+		}else if(qty<0 ){
+			
+		return false;
+			
+		}else {
+			try {
+				tempqty = Integer.parseInt(id);
+				
+			} catch (Exception e) {
+				
+				errorMsg ="Id must be numeric!";
+				return false;	
+
+			}
+				
+			}
+		 
+			med = new Medicine(tempqty, name, price, qty); 
+			boolean updated = med.update();
+			
+			if(updated == false) {
+				errorMsg = "update Failed";
+				
+			}
+			
+			return updated;
+		}
+	
+	
 }

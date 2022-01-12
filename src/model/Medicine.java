@@ -16,7 +16,9 @@ public class Medicine {
 	private int stock;
 	private Connect con = Connect.getConnection();
 	
-	
+	public Medicine() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public int getId() {
 		return id;
@@ -97,7 +99,7 @@ public class Medicine {
 	}
 	
 	public Medicine getMed(String name) {
-		String query = String.format("SELECT * FROM users WHERE email=?");
+		String query = String.format("SELECT * FROM medicine WHERE name=?");
 		PreparedStatement ps = con.prepareStatement(query);
 		ResultSet rs = null;
 		try {
@@ -105,7 +107,27 @@ public class Medicine {
 			rs = ps.executeQuery();
 			Medicine med = null;
 			
-			//jika ada data dari query
+			if(rs.first()) {
+				// rs dari query -> object user
+				med = map(rs);
+				return med;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public Medicine getMed(int id) {
+		String query = String.format("SELECT * FROM medicine WHERE id=?");
+		PreparedStatement ps = con.prepareStatement(query);
+		ResultSet rs = null;
+		try {
+			ps.setString(1, name);
+			rs = ps.executeQuery();
+			Medicine med = null;
 			
 			if(rs.first()) {
 				// rs dari query -> object user
@@ -122,13 +144,31 @@ public class Medicine {
 	
 	public boolean insert() {
 		//boolean kalau berhasil return true kalau gagal return false
-		String query = String.format("INSERT INTO Medicine (name , price, stock) VALUES (?, ?, ?)");
+		String query = String.format("INSERT INTO medicine (name , price, stock) VALUES (?, ?, ?)");
 		PreparedStatement ps = con.prepareStatement(query);
 			
 		try {
 			ps.setString(1, name);
 			ps.setInt(2, price);
 			ps.setInt(3, stock);
+			return ps.executeUpdate()==1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	public boolean update() {
+		//boolean kalau berhasil return true kalau gagal return false
+		String query = String.format("UPDATE medicine SET id=? ,name=? ,price=? ,qty=?");
+		PreparedStatement ps = con.prepareStatement(query);
+			
+		try {
+			ps.setInt(1, id);
+			ps.setString(2, name);
+			ps.setInt(3, price);
+			ps.setInt(4, stock);
 			return ps.executeUpdate()==1;
 		} catch (SQLException e) {
 			e.printStackTrace();
