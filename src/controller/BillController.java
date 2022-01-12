@@ -82,7 +82,7 @@ public class BillController {
 		if(econ.getEmployee(employeeId) == null) {
 			errorMsg = "Employee does not exist!";
 			return false;
-		}/*
+		}
 		else if(pcon.getPatient(strPatientId)==null) {
 			errorMsg = "Patient does not exist!";
 			return false;
@@ -97,10 +97,6 @@ public class BillController {
 			
 			return inserted;
 		}
-		*/
-		
-		
-		return false;
 	}
 	
 	public boolean checkout(String id) {
