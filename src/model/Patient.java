@@ -145,7 +145,7 @@ public class Patient {
 	
 	//getpatient
 	public Patient getPatient(int PatientID){
-		String query = String.format("SELECT * FROM patient WHERE patientID=?");
+		String query = String.format("SELECT * FROM patient WHERE PatientID=?");
 		PreparedStatement ps = con.prepareStatement(query);
 		ResultSet rs = null;
 		try {
