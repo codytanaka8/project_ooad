@@ -121,7 +121,7 @@ public class Medicine {
 	}
 	
 	public Medicine getMed(int id) {
-		String query = String.format("SELECT * FROM medicine WHERE id=?");
+		String query = String.format("SELECT * FROM medicine WHERE medicineid=?");
 		PreparedStatement ps = con.prepareStatement(query);
 		ResultSet rs = null;
 		try {
@@ -161,7 +161,7 @@ public class Medicine {
 	
 	public boolean update() {
 		//boolean kalau berhasil return true kalau gagal return false
-		String query = String.format("UPDATE medicine SET id=? ,name=? ,price=? ,qty=?");
+		String query = String.format("UPDATE medicine SET medicineid=? ,name=? ,price=? ,stock=?");
 		PreparedStatement ps = con.prepareStatement(query);
 			
 		try {
@@ -179,7 +179,7 @@ public class Medicine {
 	
 	public boolean delete() {
 		//boolean kalau berhasil return true kalau gagal return false
-		String query = String.format("DELETE FROM medicine WHERE id=?'");
+		String query = String.format("DELETE FROM medicine WHERE medicineid=?");
 		PreparedStatement ps = con.prepareStatement(query);
 			
 		try {
