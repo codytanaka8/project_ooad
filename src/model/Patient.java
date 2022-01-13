@@ -15,6 +15,9 @@ public class Patient {
 	private Date DOB;
 	private Connect con = Connect.getConnection();
 
+	public Patient(){
+		
+	}
 	
 
 	public Patient(int patientID, String name, Date dOB) {
@@ -86,7 +89,7 @@ public class Patient {
 	
 	//getallpatient
 	public Vector<Patient> getAllPatient(){
-		String query = String.format("SELECT * FROM employee");
+		String query = String.format("SELECT * FROM patient");
 		ResultSet rs = con.executeQuery(query);
 		Vector<Patient> patients = new Vector<>();
 		try {
@@ -103,14 +106,15 @@ public class Patient {
 	}
 	
 	
-	//searchpatient (incomplete)
-	public Vector<Patient>  searchPatient(String Name){
+	//searchpatient 
+	public Vector<Patient> searchPatient(String Name){
 		String query = String.format("SELECT * FROM patient WHERE Name=?");
 		PreparedStatement ps = con.prepareStatement(query);
-		ResultSet rs = con.executeQuery(query);
+		ResultSet rs = null;
 		Vector<Patient> patients = new Vector<>();
 		try {
 			ps.setString(1, Name);
+			rs = ps.executeQuery();
 			while(rs.next()){
 				Patient patient = map(rs);
 				patients.add(patient);

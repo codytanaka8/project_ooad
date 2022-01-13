@@ -18,7 +18,7 @@ public class PatientDetail {
 	private Connect con = Connect.getConnection();
 
 	public PatientDetail() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 
@@ -97,10 +97,14 @@ public class PatientDetail {
 	}
 	
 	public Vector<PatientDetail> getAllPatientDetail(int PatientID){
-		String query = String.format("SELECT * FROM patient_detail");
-		ResultSet rs = con.executeQuery(query);
+		String query = String.format("SELECT * FROM patient_detail WHERE PatientID=? ");
+		ResultSet rs = null;
+		PreparedStatement ps = con.prepareStatement(query);
 		Vector<PatientDetail> pds = new Vector<>();
+		
 		try {
+			ps.setInt(1, PatientID);
+			rs = ps.executeQuery();
 			while(rs.next()){
 				PatientDetail pd = map(rs);
 				pds.add(pd);
@@ -111,7 +115,7 @@ public class PatientDetail {
 		}
 		return null;
 	}
-	
+
 	public boolean addPatientDetail(){
 		String query = String.format("INSERT INTO patient_detail (PatientID , PatientDetailID , EmployeeID, Symptom, CheckDate) VALUES (?, ?, ?, ?, ?)");
 		PreparedStatement ps = con.prepareStatement(query);
