@@ -18,7 +18,9 @@ import javax.swing.table.DefaultTableModel;
 
 import connect.Connect;
 import controller.BillController;
+import controller.EmployeeController;
 import model.Bill;
+import model.Employee;
 
 public class AdminView {
 	
@@ -154,7 +156,7 @@ public class AdminView {
 				String patientId = patientTextField.getText();
 				String paymentType = paymentField.getText();
 				
-				if(BillController.getInstance().insert(0, patientId, paymentType)) {
+				if(BillController.getInstance().insert("", patientId, paymentType)) {
 					JOptionPane.showMessageDialog(null, "Insert bill success!");
 				}
 				else {
@@ -169,8 +171,10 @@ public class AdminView {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String id = lblIdLabel.getText();
-				BillController.getInstance().showBillDetailView(id);
-				frame.dispose();
+				if(id!="ID") {
+					BillController.getInstance().showBillDetailView(id);
+					frame.dispose();
+				}
 			}
 		});
 		
@@ -198,26 +202,29 @@ public class AdminView {
 		String headerDoc[] = {"ID", "Name", "Status"};
 		DefaultTableModel dtmDoc = new DefaultTableModel(headerDoc, 0);
 		
-		//Vector<Employee> doctors = 
-		
+		Vector<Employee> doctors = EmployeeController.getInstance().getDoctorList();
+		for(Employee doc : doctors) {
+			tableContentDoc = new Vector<>();
+			tableContentDoc.add(doc.getEmployeeId());
+			tableContentDoc.add(doc.getName());
+			tableContentDoc.add(doc.getStatus());
+		}
 		tableDoc.setModel(dtmDoc);
 		
 		String headerBill[] = {"ID", "Employee", "Patient", "Date", "Payment", "Status"};
 		DefaultTableModel dtmBill = new DefaultTableModel(headerBill, 0);
 		
 		Vector<Bill> bills = BillController.getInstance().getAll();
-		if(bills != null) {
-			for(Bill bill : bills) {
-				tableContentBill = new Vector<>();
-				tableContentBill.add(bill.getId());
-				tableContentBill.add(bill.getEmployeeId());
-				tableContentBill.add(bill.getPatientId());
-				tableContentBill.add(bill.getCreatedAt());
-				tableContentBill.add(bill.getPaymentType());
-				tableContentBill.add(bill.getStatus());
-				
-				dtmBill.addRow(tableContentBill);
-			}
+		for(Bill bill : bills) {
+			tableContentBill = new Vector<>();
+			tableContentBill.add(bill.getId());
+			tableContentBill.add(bill.getEmployeeId());
+			tableContentBill.add(bill.getPatientId());
+			tableContentBill.add(bill.getCreatedAt());
+			tableContentBill.add(bill.getPaymentType());
+			tableContentBill.add(bill.getStatus());
+			
+			dtmBill.addRow(tableContentBill);
 		}
 		
 		tableBill.setModel(dtmBill);

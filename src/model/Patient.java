@@ -15,10 +15,7 @@ public class Patient {
 	private Date DOB;
 	private Connect con = Connect.getConnection();
 
-	public Patient() {
-		// TODO Auto-generated constructor stub
-	}
-
+	
 
 	public Patient(int patientID, String name, Date dOB) {
 		super();
@@ -88,7 +85,7 @@ public class Patient {
 	}
 	
 	//getallpatient
-	public Vector<Patient> getAllEmployee(){
+	public Vector<Patient> getAllPatient(){
 		String query = String.format("SELECT * FROM employee");
 		ResultSet rs = con.executeQuery(query);
 		Vector<Patient> patients = new Vector<>();

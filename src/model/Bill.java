@@ -138,11 +138,12 @@ public class Bill {
 	}
 	
 	public boolean checkout() {
-		String query = String.format("UPDATE bill SET Status=? WHERE id=?");
+		String query = String.format("UPDATE bill SET Status=? WHERE Bill_ID=?");
 		PreparedStatement ps = con.prepareStatement(query);
 		
 		try {
 			ps.setString(1, status);
+			ps.setInt(2, id);
 			return ps.executeUpdate() == 1;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

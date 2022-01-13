@@ -15,6 +15,7 @@ public class Employee {
 	private int employeeId;
 	private int roleId;
 	private String name;
+	private String username;
 	private String password;
 	private int salary;
 	private String status;
@@ -23,6 +24,69 @@ public class Employee {
 
 	public Employee() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public Employee(int roleId, String name, String username,int salary, String password, String status) {
+		super();
+		this.roleId = roleId;
+		this.name = name;
+		this.username = username;
+		this.password = password;
+		this.salary = salary;
+		this.status = status;
+	
+	}
+	
+	public boolean delete() {
+//		String query = String.format("DELETE FROM Employee WHERE EmployeeID = ?");
+//		PreparedStatement ps = con.prepareStatement(query);
+//		
+//		try {
+//			ps.setInt(1, employeeId);
+//			int deleted = ps.executeUpdate();
+//			return deleted == 1;
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return false;
+		
+		String query = String.format(" UPDATE employee SET Status=?  WHERE EmployeeId=?"
+				+ "");
+		PreparedStatement ps = con.prepareStatement(query);
+		try {
+			ps.setString(1, "inactive");
+			ps.setInt(2, employeeId);
+			ps.executeUpdate();
+			
+
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	//kodi
+	public Employee insertEmployee(){
+		String query = String.format("INSERT INTO employee(RoleID, Name, Username, Password, Salary, Status"
+				+ ") VALUES (?,?,?,?,?,?)",
+				"active");
+		PreparedStatement ps = con.prepareStatement(query);
+		try {
+			ps.setInt(1, roleId);
+			ps.setString(2, name);
+			ps.setString(3, username);
+			ps.setString(4, password);
+			ps.setInt(5, salary);
+			ps.setString(6, status);
+			ps.executeUpdate();
+			
+
+			return this;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public Employee(String username, String userPassword) {
@@ -150,23 +214,23 @@ public class Employee {
 	}
 	
 	//get all employee
-	public Vector<Employee> getAllEmployee(){
-		String query = String.format("SELECT * FROM employee");
-		ResultSet rs = con.executeQuery(query);
-		Vector<Employee> users = new Vector<>();
-		try {
-			while(rs.next()){
-				Employee employee = map(rs);
-				users.add(employee);
+		public Vector<Employee> getAllEmployee(){
+			String query = String.format("SELECT * FROM employee");
+			ResultSet rs = con.executeQuery(query);
+			Vector<Employee> users = new Vector<>();
+			try {
+				while(rs.next()){
+					Employee employee = map(rs);
+					users.add(employee);
+				}
+				return users;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			return users;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
+			
 		}
-		return null;
-		
-	}
 	
 	//get employee
 	public Employee getEmployee(int employeeId){
@@ -190,47 +254,49 @@ public class Employee {
 		return null;
 	}
 	
+	//evan
 	//insertemployee
-	public boolean insertEmployee(){
-		String query = String.format("INSERT INTO employee (RoleID , Name , Password, Salary, Status) VALUES (?, ?, ?, ?, ?)");
-		PreparedStatement ps = con.prepareStatement(query);
-			
-		try {
-			ps.setInt(1, roleId);
-			ps.setString(2, name);
-			ps.setString(3, password);
-			ps.setInt(4, salary);
-			ps.setString(5, status);
-			return ps.executeUpdate() == 1;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-		
-	}
+//	public boolean insertEmployee(){
+//		String query = String.format("INSERT INTO employee (RoleID , Name , Password, Salary, Status) VALUES (?, ?, ?, ?, ?)");
+//		PreparedStatement ps = con.prepareStatement(query);
+//			
+//		try {
+//			ps.setInt(1, roleId);
+//			ps.setString(2, name);
+//			ps.setString(3, password);
+//			ps.setInt(4, salary);
+//			ps.setString(5, status);
+//			return ps.executeUpdate() == 1;
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return false;
+//		
+//	}
 	
-	//update employee
-	public boolean updateEmployee(){
-		String query = String.format("UPDATE Employee SET RoleID=? , Name=? , Password=? , Salary=? , Status=? WHERE employeeId=?");
-		PreparedStatement ps = con.prepareStatement(query);
-			
-		try {
-			ps.setString(1, name);
-			ps.setString(2, password);
-			ps.setInt(3, salary);
-			ps.setString(4, status);
-			ps.setInt(4, employeeId);
-			return ps.executeUpdate() ==1;
-		} catch (SQLException e) {
-			e.printStackTrace();
+	//update employee KODI
+		public Employee updateEmployee(){
+			String query = String.format(" UPDATE employee SET RoleID=? , Name=? , Salary=?  WHERE EmployeeId=?"
+					+ "");
+			PreparedStatement ps = con.prepareStatement(query);
+			try {
+				ps.setInt(1, roleId);
+				ps.setString(2, name);
+				ps.setInt(3, salary);
+				ps.setInt(4, employeeId);
+				ps.executeUpdate();
+				
+
+				return this;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return null;
 		}
-		
-		return false;
-	}
 	
 	//getdoctor list (incomplete)
 	public Vector<Employee> getDoctorList(){
-		String query = String.format("SELECT * FROM employee WHERE RoleId=");
+		String query = String.format("SELECT * FROM employee WHERE RoleId=3");
 		ResultSet rs = con.executeQuery(query);
 		Vector<Employee> users = new Vector<>();
 		try {

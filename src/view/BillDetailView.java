@@ -36,7 +36,7 @@ public class BillDetailView {
 	private void initialize() {
 		frame = new JFrame("Bill Detail");
 		frame.setVisible(true);
-		frame.setBounds(100, 100, 500, 500);
+		frame.setBounds(100, 100, 800, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		

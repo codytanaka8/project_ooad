@@ -96,7 +96,7 @@ public class PatientDetail {
 		return null;
 	}
 	
-	public Vector<PatientDetail> getAllPatientDetail(){
+	public Vector<PatientDetail> getAllPatientDetail(int PatientID){
 		String query = String.format("SELECT * FROM patient_detail");
 		ResultSet rs = con.executeQuery(query);
 		Vector<PatientDetail> pds = new Vector<>();
