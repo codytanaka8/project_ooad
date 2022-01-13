@@ -122,9 +122,9 @@ public class EmployeeController {
 		}
 		else {
 			if(em.getRoleId()==1) BillController.getInstance().showAdminView();
-			//else if(em.getRoleId()==2) 
+			else if(em.getRoleId()==2) MedController.getInstance().showPharmacistView();
 			else if(em.getRoleId()==3) PatientController.getInstance().showDoctorView();
-			//else if(em.getRoleId()==4) PatientController.getInstance().showNurseView();
+			else if(em.getRoleId()==4) PatientController.getInstance().showDoctorView();
 			else if(em.getRoleId()==5) HrController.getInstance().showHrPage();
 		}
 		return em;

@@ -24,7 +24,7 @@ public class BillController {
 		econ = EmployeeController.getInstance();
 		mcon = MedController.getInstance();
 	}
-	
+
 	public String getErrorMsg() {
 		return errorMsg;
 	}
@@ -85,6 +85,10 @@ public class BillController {
 		}
 		else if(pcon.getPatient(strPatientId)==null) {
 			errorMsg = "Patient does not exist!";
+			return false;
+		}
+		else if(!(paymentType.equals("Cash") || paymentType.equals("Credit"))) {
+			errorMsg = "Payment Type must be Cash or Credit!";
 			return false;
 		}
 		else {

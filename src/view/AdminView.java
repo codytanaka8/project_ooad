@@ -23,8 +23,7 @@ import model.Employee;
 public class AdminView {
 	
 	private JFrame frame;
-	private JTextField employeeTextField;
-	private JTextField patientTextField, paymentField;
+	private JTextField patientTextField, paymentField, employeeTextField;
 	Vector<Object> tableContentDoc, tableContentBill;
 
 	private JTable tableDoc, tableBill;
@@ -66,17 +65,17 @@ public class AdminView {
 		lblIdLabel.setBounds(24 , 450 , 61 , 16);
 		frame.getContentPane().add(lblIdLabel);
 
-//		JLabel lblEmployeeLabel = new JLabel("Employee");
-//		lblEmployeeLabel.setBounds(24, 473, 101, 16);
-//		frame.getContentPane().add(lblEmployeeLabel);
+		JLabel lblEmployeeLabel = new JLabel("Employee ID");
+		lblEmployeeLabel.setBounds(24, 473, 101, 16);
+		frame.getContentPane().add(lblEmployeeLabel);
 
-//		employeeTextField = new JTextField();
-//		employeeTextField.setBounds(161, 468, 170, 26);
-//		frame.getContentPane().add(employeeTextField);
-//		employeeTextField.setColumns(10);
+		employeeTextField = new JTextField();
+		employeeTextField.setBounds(161, 468, 170, 26);
+		frame.getContentPane().add(employeeTextField);
+		employeeTextField.setColumns(10);
 
 		JLabel lblPatientLabel = new JLabel("Patient ID");
-		lblPatientLabel.setBounds(24, 514, 101, 16);
+		lblPatientLabel.setBounds(24, 514, 151, 16);
 		frame.getContentPane().add(lblPatientLabel);
 
 		patientTextField = new JTextField();
@@ -84,8 +83,8 @@ public class AdminView {
 		frame.getContentPane().add(patientTextField);
 		patientTextField.setColumns(10);
 
-		JLabel lblPaymentLabel = new JLabel("Payment Type");
-		lblPaymentLabel.setBounds(24, 562, 101, 16);
+		JLabel lblPaymentLabel = new JLabel("Payment [Cash|Credit]");
+		lblPaymentLabel.setBounds(24, 562, 151, 16);
 		frame.getContentPane().add(lblPaymentLabel);
 
 		paymentField = new JTextField();
@@ -151,10 +150,11 @@ public class AdminView {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				String employeeId = employeeTextField.getText();
 				String patientId = patientTextField.getText();
 				String paymentType = paymentField.getText();
 				
-				if(BillController.getInstance().insert("", patientId, paymentType)) {
+				if(BillController.getInstance().insert(employeeId, patientId, paymentType)) {
 					JOptionPane.showMessageDialog(null, "Insert bill success!");
 				}
 				else {

@@ -4,12 +4,11 @@ import java.awt.EventQueue;
 
 import controller.LoginController;
 
+
 public class Main {
 
 	public Main() {
 		LoginController.getInstance().showLoginForm();
-
-
 	}
 	
 	public static void main(String[] args) {

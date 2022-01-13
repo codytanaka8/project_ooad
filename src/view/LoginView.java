@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import controller.BillController;
 import controller.EmployeeController;
 import controller.MedController;
 import model.Employee;
@@ -94,8 +95,6 @@ public class LoginView extends JFrame implements ActionListener {
 			else {
 				JOptionPane.showMessageDialog(this, "Login Success!");
 				this.dispose();
-//				BillController.getInstance().showAdminView();
-				MedController.getInstance().showPharmacistView();
 			}
 		}
 	}
