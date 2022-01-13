@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.BillController;
 import controller.EmployeeController;
+import controller.PatientController;
 import model.Bill;
 import model.Employee;
 
@@ -120,6 +121,7 @@ public class AdminView {
 				int row = 0;
 				row = tableBill.getSelectedRow();
 				lblIdLabel.setText(""+tableBill.getValueAt(row, 0));
+				employeeTextField.setText(""+tableBill.getValueAt(row, 1));
 				patientTextField.setText(""+tableBill.getValueAt(row, 2));
 				paymentField.setText(""+tableBill.getValueAt(row, 4));
 			}
@@ -206,6 +208,8 @@ public class AdminView {
 			tableContentDoc.add(doc.getEmployeeId());
 			tableContentDoc.add(doc.getName());
 			tableContentDoc.add(doc.getStatus());
+			
+			dtmDoc.addRow(tableContentDoc);
 		}
 		tableDoc.setModel(dtmDoc);
 		
@@ -216,8 +220,8 @@ public class AdminView {
 		for(Bill bill : bills) {
 			tableContentBill = new Vector<>();
 			tableContentBill.add(bill.getId());
-			tableContentBill.add(bill.getEmployeeId());
-			tableContentBill.add(bill.getPatientId());
+			tableContentBill.add(EmployeeController.getInstance().getEmployee(bill.getEmployeeId()).getName());
+			tableContentBill.add(PatientController.getInstance().getPatient(Integer.toString(bill.getPatientId())).getName());
 			tableContentBill.add(bill.getCreatedAt());
 			tableContentBill.add(bill.getPaymentType());
 			tableContentBill.add(bill.getStatus());

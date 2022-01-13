@@ -3,7 +3,6 @@ package main;
 import java.awt.EventQueue;
 
 import controller.LoginController;
-import controller.PatientController;
 
 
 public class Main {

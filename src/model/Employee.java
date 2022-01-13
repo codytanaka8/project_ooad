@@ -200,7 +200,7 @@ public class Employee {
 	private Employee map(ResultSet rs) {
 		try {
 			int employeeId = rs.getInt("EmployeeID");
-			int roleId = rs.getInt("RoleId");
+			int roleId = rs.getInt("RoleID");
 			String name = rs.getString("Name");
 			String password = rs.getString("Password");
 			int salary = rs.getInt("Salary");
@@ -295,22 +295,22 @@ public class Employee {
 			return null;
 		}
 	
-	//getdoctor list (incomplete)
 	public Vector<Employee> getDoctorList(){
-		String query = String.format("SELECT * FROM employee WHERE RoleId=3");
+		String query = String.format("SELECT * FROM employee WHERE RoleID=3");
 		ResultSet rs = con.executeQuery(query);
-		Vector<Employee> users = new Vector<>();
+		Vector <Employee> docs = new Vector<>();
+		
 		try {
-			while(rs.next()){
-				Employee employee = map(rs);
-				users.add(employee);
+			while(rs.next()) {
+				Employee doc = map(rs);
+				docs.add(doc);
 			}
-			return users;
+			return docs;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
 		
+		return null;
 	}
 }

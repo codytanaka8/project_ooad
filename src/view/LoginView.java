@@ -123,7 +123,6 @@ public class LoginView extends JFrame implements ActionListener {
 				System.out.println(user.getSalary());
 				JOptionPane.showMessageDialog(this, "Login Success!");
 				this.dispose();
-//				BillController.getInstance().showAdminView();
 			}
 		}
 	}

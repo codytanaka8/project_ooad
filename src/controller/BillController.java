@@ -16,10 +16,12 @@ public class BillController {
 	public static EmployeeController econ;
 	public static MedController mcon;
 	private model.Bill bill;
+	private model.BillDetail bd;
 	private String errorMsg = "";
 
 	private BillController() {
 		bill = new Bill();
+		bd = new BillDetail();
 		pcon = PatientController.getInstance();
 		econ = EmployeeController.getInstance();
 		mcon = MedController.getInstance();
@@ -45,7 +47,7 @@ public class BillController {
 		int idInt = -1;
 		try {
 			idInt = Integer.parseInt(id);
-			new BillDetailView(id);
+			new BillDetailView(""+idInt);
 		} catch (NumberFormatException e) {
 			errorMsg = "No data";
 		}
@@ -142,10 +144,8 @@ public class BillController {
 			return false;
 		}
 		
-		bill = new Bill(billId, 0, 0, null, "", "");
-		bill.getBillDetail().setMedId(medId);
-		bill.getBillDetail().setQty(qty);
-		boolean inserted = bill.getBillDetail().insert();
+		bd = new BillDetail(0, billId, medId, qty);
+		boolean inserted = bd.insert();
 		
 		if(!inserted) errorMsg = "Insert failed!";
 		
@@ -172,11 +172,8 @@ public class BillController {
 			return false;
 		}
 		
-		bill = new Bill(detailId, 0, 0, null, "", "");
-		bill.getBillDetail().setId(detailId);
-		bill.getBillDetail().setMedId(medId);
-		bill.getBillDetail().setQty(qty);
-		boolean updated = bill.getBillDetail().update();
+		bd = new BillDetail(detailId, 0, medId, qty);
+		boolean updated = bd.update();
 		
 		if(!updated) errorMsg = "Update failed!";
 		
@@ -192,9 +189,8 @@ public class BillController {
 			return false;
 		}
 		
-		bill = new Bill(0, 0, 0, null, "", "");
-		bill.getBillDetail().setId(id);
-		boolean deleted = bill.getBillDetail().delete();
+		bd = new BillDetail(id, 0, 0, 0);
+		boolean deleted = bd.delete();
 		
 		if(!deleted) errorMsg = "Delete failed!";
 		

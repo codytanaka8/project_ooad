@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import connect.Connect;
+import model.BillDetail;
 
 public class Bill {
 	

@@ -121,11 +121,11 @@ public class Medicine {
 	}
 	
 	public Medicine getMed(int id) {
-		String query = String.format("SELECT * FROM medicine WHERE medicineid=?");
+		String query = String.format("SELECT * FROM medicine WHERE MedicineID=?");
 		PreparedStatement ps = con.prepareStatement(query);
 		ResultSet rs = null;
 		try {
-			ps.setString(1, name);
+			ps.setInt(1, id);
 			rs = ps.executeQuery();
 			Medicine med = null;
 			

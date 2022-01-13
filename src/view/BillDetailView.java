@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import controller.BillController;
+import controller.MedController;
 import model.BillDetail;
 
 public class BillDetailView {
@@ -28,12 +29,12 @@ public class BillDetailView {
 	private JTable table;
 
 	public BillDetailView(String id) {
-		initialize();
 		billId = id;
+		initialize();
 	}
 	
 	private void initialize() {
-		frame = new JFrame("Bill Detail");
+		frame = new JFrame("Bill Detail "+billId);
 		frame.setVisible(true);
 		frame.setBounds(100, 100, 800, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -102,8 +103,11 @@ public class BillDetailView {
 			public void mouseEntered(MouseEvent e) {}
 			
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
+				int row = 0;
+				row = table.getSelectedRow();
+				lblIdLabel.setText(""+table.getValueAt(row, 0));
+				medTextField.setText(""+table.getValueAt(row, 1));
+				qtyTextField.setText(""+table.getValueAt(row, 2));
 			}
 		});
 		
@@ -187,7 +191,7 @@ public class BillDetailView {
 			for(BillDetail detail : details) {
 				tableContent = new Vector<>();
 				tableContent.add(detail.getId());
-				tableContent.add(detail.getMedId());
+				tableContent.add(MedController.getInstance().getMed(detail.getMedId()).getName());
 				tableContent.add(detail.getQty());
 				
 				dtm.addRow(tableContent);
