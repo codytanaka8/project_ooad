@@ -1,13 +1,10 @@
-package main;
+package src.main;
 
 import java.awt.EventQueue;
 
-import controller.BillController;
-import controller.LoginController;
-import view.HrView;
-
-import controller.MedController;
-import controller.PatientController;
+import src.controller.MedController;
+import src.controller.PatientController;
+import src.view.HrView;
 
 
 //import controllers.UserController;
@@ -18,12 +15,12 @@ public class Main {
 		//UserController.getInstance().showLoginForm();
 		//BillController.getInstance().showAdminView();
 
-		new HrView();
+//		new HrView();
 //		LoginController.getInstance().showLoginForm();
 
 		//LoginController.getInstance().showLoginForm();
-		//MedController.getInstance().showPharmacistView();
-		PatientController.getInstance().showDoctorView();
+		MedController.getInstance().showPharmacistView();
+//		PatientController.getInstance().showDoctorView();
 
 	}
 	

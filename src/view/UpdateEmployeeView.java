@@ -1,4 +1,4 @@
-package view;
+package src.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,9 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import controller.BillController;
-import controller.EmployeeController;
-import model.Employee;
+import src.controller.EmployeeController;
 
 public class UpdateEmployeeView extends JFrame implements ActionListener {
 	JTextField nameField;

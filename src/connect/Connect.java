@@ -1,4 +1,4 @@
-package connect;
+package src.connect;
 import java.sql.*;
 public final class Connect {
 	

@@ -1,4 +1,4 @@
-package model;
+package src.model;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
-import connect.Connect;
+import src.connect.Connect;
 
 public class Medicine {
 
@@ -80,7 +80,7 @@ public class Medicine {
 	}
 	
 	public Vector<Medicine> getAll(){
-		String query = String.format("SELECT * FROM users");
+		String query = String.format("SELECT * FROM medicine");
 		ResultSet rs = con.executeQuery(query);
 		Vector<Medicine> meds = new Vector<>();
 		
@@ -169,6 +169,22 @@ public class Medicine {
 			ps.setString(2, name);
 			ps.setInt(3, price);
 			ps.setInt(4, stock);
+			return ps.executeUpdate()==1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	public boolean delete() {
+		//boolean kalau berhasil return true kalau gagal return false
+		String query = String.format("DELETE FROM medicine WHERE id=?'");
+		PreparedStatement ps = con.prepareStatement(query);
+			
+		try {
+			ps.setInt(1, id);
+			
 			return ps.executeUpdate()==1;
 		} catch (SQLException e) {
 			e.printStackTrace();

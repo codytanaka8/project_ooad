@@ -1,13 +1,13 @@
-package controller;
+package src.controller;
 
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Vector;
 
-import model.Bill;
-import model.BillDetail;
-import view.AdminView;
-import view.BillDetailView;
+import src.model.Bill;
+import src.model.BillDetail;
+import src.view.AdminView;
+import src.view.BillDetailView;
 
 public class BillController {
 	
@@ -15,7 +15,7 @@ public class BillController {
 	public static PatientController pcon;
 	public static EmployeeController econ;
 	public static MedController mcon;
-	private Bill bill;
+	private src.model.Bill bill;
 	private String errorMsg = "";
 
 	private BillController() {

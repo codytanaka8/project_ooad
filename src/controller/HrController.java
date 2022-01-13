@@ -1,6 +1,6 @@
-package controller;
+package src.controller;
 
-import view.HrView;
+import src.view.HrView;
 
 public class HrController {
 

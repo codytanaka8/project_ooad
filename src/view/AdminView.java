@@ -1,4 +1,4 @@
-package view;
+package src.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,17 +10,15 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import connect.Connect;
-import controller.BillController;
-import controller.EmployeeController;
-import model.Bill;
-import model.Employee;
+import src.controller.BillController;
+import src.controller.EmployeeController;
+import src.model.Bill;
+import src.model.Employee;
 
 public class AdminView {
 	

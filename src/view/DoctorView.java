@@ -1,4 +1,4 @@
-package view;
+package src.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,12 +15,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import controller.BillController;
-import controller.PatientController;
-
-import model.Bill;
-import model.Patient;
-import model.PatientDetail;
+import src.controller.BillController;
+import src.controller.PatientController;
+import src.model.Patient;
 
 
 public class DoctorView {

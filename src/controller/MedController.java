@@ -1,10 +1,10 @@
-package controller;
+package src.controller;
 
 import java.util.Vector;
 
-import model.Medicine;
+import src.model.Medicine;
 import src.view.PharmacistView;
-import view.AdminView;
+import src.view.AdminView;
 
 
 public class MedController {
@@ -101,6 +101,34 @@ public class MedController {
 			
 			return updated;
 		}
+	
+	public boolean delete( String medId) {
+		//validation
+		
+		int testId = -1;
+		
+		try {
+			testId = Integer.parseInt(medId);
+			
+		} catch (Exception e) {
+			errorMsg = "Id must be numeric!";
+			return false;
+		
+		}
+		
+		med = new Medicine();
+		med.setId(testId);
+		
+		boolean deleted = med.delete();
+		
+		if(!deleted) {
+			errorMsg = "Delete Failed!";
+			
+		}
+		return deleted;
+		
+	}
+	
 	
 	
 }

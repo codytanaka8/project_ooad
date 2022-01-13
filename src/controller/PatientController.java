@@ -1,12 +1,11 @@
-package controller;
+package src.controller;
 
 import java.sql.Date;
 import java.util.Vector;
 
-import model.Bill;
-import model.Patient;
-import model.PatientDetail;
-import view.DoctorView;
+import src.model.Patient;
+import src.model.PatientDetail;
+import src.view.DoctorView;
 
 
 

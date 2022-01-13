@@ -1,6 +1,6 @@
-package controller;
+package src.controller;
 
-import view.LoginView;
+import src.view.LoginView;
 
 public class LoginController {
 	

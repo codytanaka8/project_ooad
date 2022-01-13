@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Vector;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,10 +14,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import controller.BillController;
-import controller.MedController;
-import model.Bill;
-import model.Medicine;
+
+import src.controller.BillController;
+import src.controller.MedController;
+import src.model.Bill;
+import src.model.Medicine;
 
 public class PharmacistView {
 	private JFrame frame;
@@ -60,51 +62,51 @@ public class PharmacistView {
 		
 		
 		//0
-		JLabel lblIdLabel = new JLabel("Insert/Update/Delete Medicine");
-		lblIdLabel.setBounds(24 , 450 , 61 , 16);
+		JLabel lblIdLabel = new JLabel("MedId");
+		lblIdLabel.setBounds(24 , 350 , 61 , 16);
 		frame.getContentPane().add(lblIdLabel);
 		
 		
 		//1
 		JLabel lblMedLabel = new JLabel("Medicine ID");
-		lblMedLabel.setBounds(24, 514, 101, 16);
+		lblMedLabel.setBounds(24, 400, 101, 16);
 		frame.getContentPane().add(lblMedLabel);
 
 		medTextField = new JTextField();
-		medTextField.setBounds(161, 509, 170, 26);
+		medTextField.setBounds(161, 395, 170, 26);
 		frame.getContentPane().add(medTextField);
 		medTextField.setColumns(10);
 		
 		
 		//2
 		JLabel lblNameLabel = new JLabel("Medicine Name");
-		lblNameLabel.setBounds(24, 562, 101, 16);
+		lblNameLabel.setBounds(24, 448, 101, 16);
 		frame.getContentPane().add(lblNameLabel);
 
 		nameTextField = new JTextField();
-		nameTextField .setBounds(161, 557, 170, 26);
+		nameTextField .setBounds(161, 443, 170, 26);
 		frame.getContentPane().add(nameTextField );
 		
 		
 		
 		//3
 		JLabel lblPriceLabel = new JLabel("Medicine Price");
-		lblPriceLabel.setBounds(24, 615, 101, 16);
+		lblPriceLabel.setBounds(24, 501, 101, 16);
 		frame.getContentPane().add(lblPriceLabel);
 
 		priceTextField = new JTextField();
-		priceTextField .setBounds(161, 610, 170, 26);
+		priceTextField .setBounds(161, 496, 170, 26);
 		frame.getContentPane().add(priceTextField );
 		
 		
 		
 		//4
 		JLabel lblStockLabel = new JLabel("Medicine Stock");
-		lblStockLabel.setBounds(24, 668, 101, 16);
+		lblStockLabel.setBounds(24, 554, 101, 16);
 		frame.getContentPane().add(lblStockLabel);
 
 		stockTextField = new JTextField();
-		stockTextField .setBounds(161, 665, 170, 26);
+		stockTextField .setBounds(161, 549, 170, 26);
 		frame.getContentPane().add(stockTextField );
 		
 		
@@ -153,7 +155,7 @@ public class PharmacistView {
 			public void mouseExited(MouseEvent e) {}
 		});
 		
-		
+
 		
 		searchButton.addActionListener(new ActionListener() {
 			
@@ -211,6 +213,23 @@ public class PharmacistView {
 			}
 		});
 		
+		deleteButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String medId = medTextField.getText();
+			
+				boolean deleted = MedController.getInstance().delete(medId); 
+					
+				if(deleted) {
+					JOptionPane.showMessageDialog(null, "Delete success!");
+				}
+				else {
+					JOptionPane.showMessageDialog(null, MedController.getInstance().getErrorMsg(), "Error Message", JOptionPane.ERROR_MESSAGE);
+				}
+				loadData();
+			}
+		});
 		
 
 		addMedButton.addActionListener(new ActionListener() {
