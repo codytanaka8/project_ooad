@@ -24,6 +24,7 @@ public class PharmacistView {
 	Vector<Object> listMed, listBill;
 
 	private JTable tableMed, tableBill;
+	
 	public PharmacistView() {
 	initialize();
 	}
