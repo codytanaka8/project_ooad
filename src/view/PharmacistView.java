@@ -23,7 +23,7 @@ import model.Medicine;
 public class PharmacistView {
 	private JFrame frame;
 	private JTextField medTextField, nameTextField, priceTextField, stockTextField,empIdTextField,
-	patIdTextField;
+	patIdTextField,billIdTextField;
 	Vector<Object> listMed, listBill;
 
 	private JTable tableMed, tableBill;
@@ -99,6 +99,15 @@ public class PharmacistView {
 		patIdTextField.setBounds(500, 435, 170, 26);
 		frame.getContentPane().add(patIdTextField );
 		
+		//7
+		JLabel lblBillId = new JLabel("Bill Id");
+		lblBillId.setBounds(400, 485, 101, 16);
+		frame.getContentPane().add(lblBillId);
+
+		billIdTextField = new JTextField();
+		billIdTextField.setBounds(500, 480, 170, 26);
+		frame.getContentPane().add(billIdTextField );
+		
 		
 		//2
 		JLabel lblNameLabel = new JLabel("Medicine Name");
@@ -150,11 +159,11 @@ public class PharmacistView {
 
 
 		JButton searchButton = new JButton("Search (By ID/Name)");
-		searchButton.setBounds(382, 523, 117, 29);
+		searchButton.setBounds(447, 625, 117, 29);
 		frame.getContentPane().add(searchButton);
 
 		JButton addtoBillButton = new JButton("Add To Bill");
-		addtoBillButton.setBounds(382, 473, 117, 29);
+		addtoBillButton.setBounds(382, 523, 117, 29);
 		frame.getContentPane().add(addtoBillButton);
 
 		loadData();
@@ -287,9 +296,9 @@ public class PharmacistView {
 				String stock = stockTextField.getText();
 				String employeeId = empIdTextField.getText();
 				String patientId = patIdTextField.getText();
+				String billId = patIdTextField.getText();
 				
-				
-				if(BillController.getInstance().insert(employeeId,patientId , "CASH ONLY") && BillController.getInstance().insertDetail(medId, price, stock)) {
+				if(BillController.getInstance().insert(employeeId,patientId , "CASH ONLY") && BillController.getInstance().insertDetail(billId, medId, stock)) {
 					JOptionPane.showMessageDialog(null, "Insert success!");
 				}
 				else {
