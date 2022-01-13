@@ -54,6 +54,10 @@ public class MedController {
 			errorMsg = "Name and id must be filled!";
 			return false;
 			
+		}else if(qty<0 ){
+			
+		return false;
+			
 		}else {
 			med = new Medicine(0, name, price, qty); 
 			boolean inserted = med.insert();
@@ -69,7 +73,7 @@ public class MedController {
 	
 	public boolean update(String id, String name, int price, int qty) {
 		//validation
-		int tempqty = -1;
+		int tempid = -1;
 		if(id.isEmpty() && name.isEmpty()) {
 			errorMsg = "Name and id must be filled!";
 			return false;
@@ -80,7 +84,7 @@ public class MedController {
 			
 		}else {
 			try {
-				tempqty = Integer.parseInt(id);
+				tempid = Integer.parseInt(id);
 				
 			} catch (Exception e) {
 				
@@ -91,7 +95,7 @@ public class MedController {
 				
 			}
 		 
-			med = new Medicine(tempqty, name, price, qty); 
+			med = new Medicine(tempid, name, price, qty); 
 			boolean updated = med.update();
 			
 			if(updated == false) {
