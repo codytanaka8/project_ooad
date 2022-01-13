@@ -106,6 +106,7 @@ public class Employee {
 				Employee em = new Employee();
 				em.name=rs.getString("Username");
 				em.employeeId=rs.getInt("EmployeeID");
+				em.roleId=rs.getInt("RoleID");
 				return em;
 			}
 		} catch (SQLException e) {

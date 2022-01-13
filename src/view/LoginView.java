@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import controller.BillController;
 import controller.EmployeeController;
 import controller.MedController;
+import controller.PatientController;
 import model.Employee;
 
 
@@ -91,10 +92,38 @@ public class LoginView extends JFrame implements ActionListener {
 			Employee user = EmployeeController.getInstance().authenticate(username,password);
 			if(user == null) {
 				JOptionPane.showMessageDialog(this, EmployeeController.getInstance().getErrorMessage());
+			}else if(user.getRoleId()==1){
+				JOptionPane.showMessageDialog(this, "Login as admin Success!");
+				this.dispose();
+				BillController.getInstance().showAdminView();
+			}else if(user.getRoleId()==2){
+				JOptionPane.showMessageDialog(this, "Login as pharmacist Success!");
+				this.dispose();
+				System.out.println(1);
+				MedController.getInstance().showPharmacistView();
+			}else if(user.getRoleId()==3){
+				JOptionPane.showMessageDialog(this, "Login as doctor Success!");
+				this.dispose();
+				PatientController.getInstance().showDoctorView();
+			}else if(user.getRoleId()==4){
+				JOptionPane.showMessageDialog(this, "Login as nurse Success!");
+				this.dispose();
+				PatientController.getInstance().showDoctorView();
+			}else if(user.getRoleId()==5){
+				JOptionPane.showMessageDialog(this, "Login as hr Success!");
+				this.dispose();
+				System.out.println(1);
+				new HrView();
 			}
 			else {
+				System.out.println(user.getRoleId());
+				System.out.println(user.getName());
+				
+				System.out.println("pass"+user.getPassword());
+				System.out.println(user.getSalary());
 				JOptionPane.showMessageDialog(this, "Login Success!");
 				this.dispose();
+//				BillController.getInstance().showAdminView();
 			}
 		}
 	}
