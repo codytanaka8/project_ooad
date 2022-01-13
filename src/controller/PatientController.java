@@ -3,6 +3,8 @@ package controller;
 import java.sql.Date;
 import java.util.Vector;
 
+import model.Bill;
+import model.Medicine;
 import model.Patient;
 import model.PatientDetail;
 import view.DoctorView;
@@ -13,12 +15,15 @@ public class PatientController {
 	
 	public static PatientController controller;
 	private Patient patient;
+	private Medicine med;
 	private PatientDetail patientDt;
 	private String errorMsg = "";
 	
 	
 	public PatientController() {
-		// TODO Auto-generated constructor stub
+		patient = new Patient();
+		patientDt = new PatientDetail();
+		med = new Medicine();
 	}
 	
 	public static synchronized PatientController getInstance() {
@@ -63,8 +68,9 @@ public class PatientController {
 			}
 		}
 		
-		java.util.Date date=new java.util.Date(); 
-		patientDt = new PatientDetail(patID,0,EmID,Symptom,(Date) date);
+		java.util.Date date = new java.util.Date();
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		patientDt = new PatientDetail(patID,0,EmID,Symptom,sqlDate);
 		boolean inserted = patientDt.addPatientDetail();
 		
 		if(inserted == false){
@@ -78,6 +84,10 @@ public class PatientController {
 	public Vector<PatientDetail> getPatientDetail(String PatientID){
 		return patientDt.getAllPatientDetail(Integer.parseInt(PatientID));
 	}
+	
+//	public Vector<PatientDetail> getPatientDetail(){
+//		return patientDt.getAllPatientDetail();
+//	}
 	
 	//get Patient
 	public Patient getPatient(String PatientID){

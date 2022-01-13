@@ -3,13 +3,18 @@ package main;
 import java.awt.EventQueue;
 
 import controller.LoginController;
-import controller.MedController;
+
+import controller.PatientController;
+
 
 public class Main {
 
 	public Main() {
-//		LoginController.getInstance().showLoginForm();
-MedController.getInstance().showPharmacistView();
+
+		LoginController.getInstance().showLoginForm();
+//MedController.getInstance().showPharmacistView();
+
+		
 
 	}
 	

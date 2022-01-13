@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -16,219 +17,316 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import controller.BillController;
+import controller.EmployeeController;
+import controller.MedController;
 import controller.PatientController;
+
+import model.Bill;
+import model.Employee;
+import model.Medicine;
 import model.Patient;
+import model.PatientDetail;
 
 
-public class DoctorView {
+public class DoctorView extends JFrame{
 
-	private JFrame frame;
-	private JTextField employeeTextField;
-	private JTextField patientTextField, paymentField;
-	Vector<Object> tableContentPatient, tableContentPatientDt;
 
-	private JTable tablePatient, tablePatientDt;
-
-	public DoctorView() {
-		initialize();
-	}
-	
-	private void initialize() {
-		frame = new JFrame("Doctor Menu");
-		frame.setVisible(true);
-		frame.setBounds(100, 100, 800, 800);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
 		
-		JScrollPane scrollPaneDoc = new JScrollPane();
-		scrollPaneDoc.setBounds(24, 32, 726, 190);
-		frame.getContentPane().add(scrollPaneDoc);
+		private JFrame frame;
 		
-		JLabel lblTitleDoctors = new JLabel("Patient");
-		lblTitleDoctors.setBounds(24, 4, 117, 16);
-		frame.getContentPane().add(lblTitleDoctors);
+		//add patient detail
+		private JTextField patientTextField, employeeField,symptomField,checkDateField;
+		Vector<Object> tableContentPatDt, tableContentPat ,tableContentMed;
 		
-		tablePatient = new JTable();
-		scrollPaneDoc.setViewportView(tablePatient);
+		//search patient
+		private JTextField patientField;
 		
-		JScrollPane scrollPaneBill = new JScrollPane();
-		scrollPaneBill.setBounds(24, 250, 726, 190);
-		frame.getContentPane().add(scrollPaneBill);
-		
-		JLabel lblTitleLabel = new JLabel("Patient Detail");
-		lblTitleLabel.setBounds(24, 232, 117, 16);
-		frame.getContentPane().add(lblTitleLabel);
-		
-		tablePatientDt = new JTable();
-		scrollPaneBill.setViewportView(tablePatientDt);
-		
-		JLabel lblIdLabel = new JLabel("ID");
-		lblIdLabel.setBounds(24 , 450 , 61 , 16);
-		frame.getContentPane().add(lblIdLabel);
+		//search medicine
+		private JTextField medicineField;
 
-//		JLabel lblEmployeeLabel = new JLabel("Employee");
-//		lblEmployeeLabel.setBounds(24, 473, 101, 16);
-//		frame.getContentPane().add(lblEmployeeLabel);
+		private JTable tableDoc, tablePat ,tableMed;
 
-//		employeeTextField = new JTextField();
-//		employeeTextField.setBounds(161, 468, 170, 26);
-//		frame.getContentPane().add(employeeTextField);
-//		employeeTextField.setColumns(10);
-
-		JLabel lblPatientLabel = new JLabel("Patient ID");
-		lblPatientLabel.setBounds(24, 514, 101, 16);
-		frame.getContentPane().add(lblPatientLabel);
-
-		patientTextField = new JTextField();
-		patientTextField.setBounds(161, 509, 170, 26);
-		frame.getContentPane().add(patientTextField);
-		patientTextField.setColumns(10);
-
-		JLabel lblPaymentLabel = new JLabel("Payment Type");
-		lblPaymentLabel.setBounds(24, 562, 101, 16);
-		frame.getContentPane().add(lblPaymentLabel);
-
-		paymentField = new JTextField();
-		paymentField.setBounds(161, 557, 170, 26);
-		frame.getContentPane().add(paymentField);
-
-		JButton btnCheckoutButton = new JButton("Checkout");
-		btnCheckoutButton.setBounds(24, 625, 117, 29);
-		frame.getContentPane().add(btnCheckoutButton);
-
-		JButton btnAddButton = new JButton("Create");
-		btnAddButton.setBounds(153, 625, 117, 29);
-		frame.getContentPane().add(btnAddButton);
-
-		JButton btnDetailButton = new JButton("View Details");
-		btnDetailButton.setBounds(382, 523, 117, 29);
-		frame.getContentPane().add(btnDetailButton);
-
-		JButton btnResetButton = new JButton("Reset");
-		btnResetButton.setBounds(382, 473, 117, 29);
-		frame.getContentPane().add(btnResetButton);
-
-		JButton btnLogoutButton = new JButton("Logout");
-		btnLogoutButton.setBounds(653, 725, 117, 29);
-		frame.getContentPane().add(btnLogoutButton);
-		
-		loadData();
-		
-		tablePatientDt.addMouseListener(new MouseListener() {
-						
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int row = 0;
-				row = tablePatientDt.getSelectedRow();
-				lblIdLabel.setText(""+tablePatientDt.getValueAt(row, 0));
-				patientTextField.setText(""+tablePatientDt.getValueAt(row, 2));
-				paymentField.setText(""+tablePatientDt.getValueAt(row, 4));
-			}
-			
-			public void mousePressed(MouseEvent e) {}
-			public void mouseReleased(MouseEvent e) {}
-			public void mouseEntered(MouseEvent e) {}
-			public void mouseExited(MouseEvent e) {}
-		});
-		
-		btnCheckoutButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String id = lblIdLabel.getText();
-				
-				if(BillController.getInstance().checkout(id)) {
-					JOptionPane.showMessageDialog(null, "Checkout success!");
-				}
-				else {
-					JOptionPane.showMessageDialog(null, BillController.getInstance().getErrorMsg(), "Error Message", JOptionPane.ERROR_MESSAGE);
-				}
-				loadData();
-			}
-		});
-		
-		btnAddButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String patientId = patientTextField.getText();
-				String paymentType = paymentField.getText();
-				
-				if(BillController.getInstance().insert("", patientId, paymentType)) {
-					JOptionPane.showMessageDialog(null, "Insert bill success!");
-				}
-				else {
-					JOptionPane.showMessageDialog(null, BillController.getInstance().getErrorMsg(), "Error Message", JOptionPane.ERROR_MESSAGE);
-				}
-				loadData();
-			}
-		});
-		
-		btnDetailButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String id = lblIdLabel.getText();
-				if(id!="ID") {
-					BillController.getInstance().showBillDetailView(id);
-					frame.dispose();
-				}
-			}
-		});
-		
-		btnResetButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				lblIdLabel.setText("");
-				patientTextField.setText("");
-				paymentField.setText("");
-			}
-		});
-		
-		btnLogoutButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-				new LoginView();
-			}
-		});
-	}
-	
-	public void loadData() {
-		String headerPatient[] = {"Patient ID", "Name", "Date Of Birth"};
-		DefaultTableModel dtmPatient = new DefaultTableModel(headerPatient, 0);
-		Vector<Patient> patients = PatientController.getInstance().getAllPatient();
-		for(Patient patient: patients){
-			tableContentPatient = new Vector<>();
-			tableContentPatient.add(patient.getPatientID());
-			tableContentPatient.add(patient.getName());
-			tableContentPatient.add(patient.getDOB());
-			dtmPatient.addRow(tableContentPatient);
+		public DoctorView() {
+			initialize();
 		}
 		
-		tablePatient.setModel(dtmPatient);
+		private void initialize() {
+			frame = new JFrame("Doctor & Nurse Menu");
+			frame.setVisible(true);
+			frame.setBounds(100, 100, 1200, 900);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.getContentPane().setLayout(null);
+			
+			//table patient patient
+			JScrollPane scrollPanePatient = new JScrollPane();
+			scrollPanePatient.setBounds(24, 22, 1126, 120);
+			frame.getContentPane().add(scrollPanePatient);
+			
+			JLabel lblTitlePatient = new JLabel("Patient");
+			lblTitlePatient.setBounds(24, 4, 117, 16);
+			frame.getContentPane().add(lblTitlePatient);
+			
+			tablePat = new JTable();
+			scrollPanePatient.setViewportView(tablePat);
+			
+			
+			//scrollpane patient detail
+			JScrollPane scrollPanePatientDt = new JScrollPane();
+			scrollPanePatientDt.setBounds(24, 178, 1126, 120);
+			frame.getContentPane().add(scrollPanePatientDt);
+			
+			JLabel lblTitlePatientDt = new JLabel("Patient Detail");
+			lblTitlePatientDt.setBounds(24, 160, 117, 16);
+			frame.getContentPane().add(lblTitlePatientDt);
+			
+			tableDoc = new JTable();
+			scrollPanePatientDt.setViewportView(tableDoc);
+			
+			
+			//table medicine
+			JScrollPane scrollPaneMed = new JScrollPane();
+			scrollPaneMed.setBounds(24, 334, 1126, 120);
+			frame.getContentPane().add(scrollPaneMed);
+			
+			JLabel lblTitleMed = new JLabel("Medicine");
+			lblTitleMed.setBounds(24, 316, 117, 16);
+			frame.getContentPane().add(lblTitleMed);
+			
+			tableMed = new JTable();
+			scrollPaneMed.setViewportView(tableMed);
+			
+			//add patientDetail
+			JLabel lblIdLabel = new JLabel("Patient ID");
+			lblIdLabel.setBounds(24 , 530 , 101 , 16);
+			frame.getContentPane().add(lblIdLabel);
+			
+			
+			JLabel lblDoctorLabel = new JLabel("Doctor ID");
+			lblDoctorLabel.setBounds(24, 580, 101, 16);
+			frame.getContentPane().add(lblDoctorLabel);
+			
+			JLabel lblSymptomLabel = new JLabel("Symptom");
+			lblSymptomLabel.setBounds(24, 630, 101, 16);
+			frame.getContentPane().add(lblSymptomLabel);
+			
+			employeeField = new JTextField();
+			employeeField.setBounds(161, 580, 170, 26);
+			frame.getContentPane().add(employeeField);
+			
+			symptomField = new JTextField();
+			symptomField.setBounds(161, 630, 170, 26);
+			frame.getContentPane().add(symptomField);
+	
+			
+			JButton btnAddButton = new JButton("Add");
+			btnAddButton.setBounds(161, 720, 170, 26);
+			frame.getContentPane().add(btnAddButton);
+			
+			//search patient 
+			JLabel lblSearchPatientLabel = new JLabel("Search Patient");
+			lblSearchPatientLabel.setBounds(400 , 530 , 101 , 16);
+			frame.getContentPane().add(lblSearchPatientLabel);
+			
+			JLabel lblpatientNameLabel = new JLabel("Name");
+			lblpatientNameLabel.setBounds(400, 580, 101, 16);
+			frame.getContentPane().add(lblpatientNameLabel);
+			
+			patientField = new JTextField();
+			patientField.setBounds(561, 580, 170, 26);
+			frame.getContentPane().add(patientField);
+			
+			JButton btnSearchPatientButton = new JButton("Search");
+			btnSearchPatientButton.setBounds(561, 720, 170, 26);
+			frame.getContentPane().add(btnSearchPatientButton);
+			
+			
+			//search medicine
+			JLabel lblSearchMedicineLabel = new JLabel("Search Medicine");
+			lblSearchMedicineLabel.setBounds(800 , 530 , 101 , 16);
+			frame.getContentPane().add(lblSearchMedicineLabel);
+			
+			JLabel lblMedicineNameLabel = new JLabel("Medicine Name");
+			lblMedicineNameLabel.setBounds(800, 580, 101, 16);
+			frame.getContentPane().add(lblMedicineNameLabel);
+			
+			medicineField = new JTextField();
+			medicineField.setBounds(961, 580, 170, 26);
+			frame.getContentPane().add(medicineField);
+			
+			JButton btnSearchMedicineButton = new JButton("Search");
+			btnSearchMedicineButton.setBounds(961, 720, 170, 26);
+			frame.getContentPane().add(btnSearchMedicineButton);
 		
-//		String headerPatientDt[] = {"Patient Detail ID", "Patient", "Employee (Doctor)", "Symptom", "Check Date"};
-//		DefaultTableModel dtmPatientDt = new DefaultTableModel(headerPatientDt, 0);
-//		
-//		Vector<PatientDetail> patientdetail = PatientController
-//		if(bills != null) {
-//			for(Bill bill : bills) {
-//				tableContentPatientDt = new Vector<>();
-//				tableContentPatientDt.add(bill.getId());
-//				tableContentPatientDt.add(bill.getEmployeeId());
-//				tableContentPatientDt.add(bill.getPatientId());
-//				tableContentPatientDt.add(bill.getCreatedAt());
-//				tableContentPatientDt.add(bill.getPaymentType());
-//				tableContentPatientDt.add(bill.getStatus());
-//				
-//				dtmPatientDt.addRow(tableContentPatientDt);
-//			}
-//		}
-//		
-//		tablePatientDt.setModel(dtmPatientDt);
-	}
 
+			JButton btnLogoutButton = new JButton("Logout");
+			btnLogoutButton.setBounds(1000, 750, 117, 29);
+			frame.getContentPane().add(btnLogoutButton);
+			
+			loadData();
+			
+			tablePat.addMouseListener(new MouseListener() {
+							
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					int row = 0;
+					row = tablePat.getSelectedRow();
+					lblIdLabel.setText(""+tablePat.getValueAt(row, 0));
+					loadData();
+					loadPatientDt( tablePat.getValueAt(row, 0).toString());
+
+				}
+				
+				public void mousePressed(MouseEvent e) {}
+				public void mouseReleased(MouseEvent e) {}
+				public void mouseEntered(MouseEvent e) {}
+				public void mouseExited(MouseEvent e) {}
+			});
+			
+			
+			
+			btnAddButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					String PatientID = lblIdLabel.getText().toString();
+					String DoctorID = employeeField.getText();
+					String Symptom = symptomField.getText();
+	
+					
+					if(PatientController.getInstance().addPatientDetail(PatientID, DoctorID, Symptom)) {
+						JOptionPane.showMessageDialog(null, "Insert patient detail success!");
+					}
+					else {
+						JOptionPane.showMessageDialog(null, PatientController.getInstance().getErrorMessage(), "Error Message", JOptionPane.ERROR_MESSAGE);
+					}
+					loadData();
+				}
+			});
+
+			btnSearchMedicineButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					String Name = medicineField.getText();
+				
+					MedController.getInstance().getMed(Name); 
+					JOptionPane.showMessageDialog(null, "Search success");
+					loadPatient(Name);
+				}
+			});
+			
+			
+			btnSearchPatientButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					String Name = patientField.getText();
+				
+					PatientController.getInstance().searchPatient(Name); 
+					JOptionPane.showMessageDialog(null, "Search success");
+					loadPatient(Name);
+				}
+			});
+			
+	
+			btnLogoutButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					frame.dispose();
+					new LoginView();
+				}
+			});
+		}
+		
+		public void loadData() {
+
+			String headerPat[] = {"Patient ID", "Name", "Date of Birth"};
+			DefaultTableModel dtmPat = new DefaultTableModel(headerPat, 0);
+			
+			Vector<Patient> patients = PatientController.getInstance().getAllPatient();
+			for(Patient patient : patients) {
+				tableContentPat = new Vector<>();
+				tableContentPat.add(patient.getPatientID());
+				tableContentPat.add(patient.getName());
+				tableContentPat.add(patient.getDOB());
+				
+				dtmPat.addRow(tableContentPat);
+			}
+			
+			tablePat.setModel(dtmPat);
+			
+			String headerMed[] = {"Medicine ID", "Name", "Price","Stock"};
+			DefaultTableModel dtmMed = new DefaultTableModel(headerMed, 0);
+			
+			Vector<Medicine> meds = MedController.getInstance().getAll();
+			for(Medicine med : meds) {
+				tableContentMed = new Vector<>();
+				tableContentMed.add(med.getId());
+				tableContentMed.add(med.getName());
+				tableContentMed.add(med.getPrice());
+				tableContentMed.add(med.getStock());
+				
+				dtmMed.addRow(tableContentMed);
+			}
+			
+			tableMed.setModel(dtmMed);
+
+		}
+
+		public void loadPatientDt(String PatientID) {
+
+			String headerDoc[] = {"Patient Detail ID", "Patient", "Employee" , "Symptom","CheckDate"};
+			DefaultTableModel dtmDoc = new DefaultTableModel(headerDoc, 0);
+			
+			Vector<PatientDetail> patientsDt = PatientController.getInstance().getPatientDetail(PatientID);
+			for(PatientDetail patientDt : patientsDt) {
+				tableContentPatDt = new Vector<>();
+				tableContentPatDt.add(patientDt.getPatientDetailID());
+				tableContentPatDt.add(patientDt.getPatientID());
+				tableContentPatDt.add(patientDt.getEmployeeID());
+				tableContentPatDt.add(patientDt.getSymptom());
+				tableContentPatDt.add(patientDt.getCheckDate());
+				dtmDoc.addRow(tableContentPatDt);
+			}
+			
+			
+			tableDoc.setModel(dtmDoc);
+		}
+		
+		public void loadPatient(String Name){
+			String headerPat[] = {"Patient ID", "Name", "Date of Birth"};
+			DefaultTableModel dtmPat = new DefaultTableModel(headerPat, 0);
+			
+			Vector<Patient> patients = PatientController.getInstance().searchPatient(Name);
+			for(Patient patient : patients) {
+				tableContentPat = new Vector<>();
+				tableContentPat.add(patient.getPatientID());
+				tableContentPat.add(patient.getName());
+				tableContentPat.add(patient.getDOB());
+				
+				dtmPat.addRow(tableContentPat);
+			}
+			
+			tablePat.setModel(dtmPat);
+		}
+		
+		public void loadMed(String Name){
+			String headerMed[] = {"Medicine ID", "Name", "Price","Stock"};
+			DefaultTableModel dtmMed = new DefaultTableModel(headerMed, 0);
+			
+			Medicine meds = MedController.getInstance().getMed(Name);
+		
+			tableContentMed.add(meds.getId());
+			tableContentMed.add(meds.getName());
+			tableContentMed.add(meds.getPrice());
+			tableContentMed.add(meds.getStock());
+				
+			dtmMed.addRow(tableContentMed);
+			
+			
+			tableMed.setModel(dtmMed);
+		}
+
+		
 }
