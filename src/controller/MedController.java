@@ -3,8 +3,8 @@ package controller;
 import java.util.Vector;
 
 import model.Medicine;
+import src.view.PharmacistView;
 import view.AdminView;
-import view.PharmacistView;
 
 
 public class MedController {
