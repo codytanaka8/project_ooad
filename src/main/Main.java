@@ -11,6 +11,7 @@ public class Main {
 	public Main() {
 		
 		LoginController.getInstance().showLoginForm();
+		
 	}
 	
 	public static void main(String[] args) {

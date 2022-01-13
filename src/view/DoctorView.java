@@ -36,7 +36,7 @@ public class DoctorView extends JFrame{
 		
 		//add patient detail
 		private JTextField patientTextField, employeeField,symptomField,checkDateField;
-		Vector<Object> tableContentDoc, tableContentBill ,tableContentMed;
+		Vector<Object> tableContentPatDt, tableContentPat ,tableContentMed;
 		
 		//search patient
 		private JTextField patientField;
@@ -44,7 +44,7 @@ public class DoctorView extends JFrame{
 		//search medicine
 		private JTextField medicineField;
 
-		private JTable tableDoc, tableBill ,tableMed;
+		private JTable tableDoc, tablePat ,tableMed;
 
 		public DoctorView() {
 			initialize();
@@ -66,8 +66,8 @@ public class DoctorView extends JFrame{
 			lblTitlePatient.setBounds(24, 4, 117, 16);
 			frame.getContentPane().add(lblTitlePatient);
 			
-			tableBill = new JTable();
-			scrollPanePatient.setViewportView(tableBill);
+			tablePat = new JTable();
+			scrollPanePatient.setViewportView(tablePat);
 			
 			
 			//scrollpane patient detail
@@ -158,29 +158,21 @@ public class DoctorView extends JFrame{
 			frame.getContentPane().add(btnSearchMedicineButton);
 		
 
-		
-
-			
-//
-//			JButton btnDetailButton = new JButton("View Details");
-//			btnDetailButton.setBounds(382, 523, 117, 29);
-//			frame.getContentPane().add(btnDetailButton);
-//
 			JButton btnLogoutButton = new JButton("Logout");
 			btnLogoutButton.setBounds(1000, 750, 117, 29);
 			frame.getContentPane().add(btnLogoutButton);
 			
 			loadData();
 			
-			tableBill.addMouseListener(new MouseListener() {
+			tablePat.addMouseListener(new MouseListener() {
 							
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					int row = 0;
-					row = tableBill.getSelectedRow();
-					lblIdLabel.setText(""+tableBill.getValueAt(row, 0));
+					row = tablePat.getSelectedRow();
+					lblIdLabel.setText(""+tablePat.getValueAt(row, 0));
 					loadData();
-					loadPatientDt( tableBill.getValueAt(row, 0).toString());
+					loadPatientDt( tablePat.getValueAt(row, 0).toString());
 
 				}
 				
@@ -249,20 +241,20 @@ public class DoctorView extends JFrame{
 		
 		public void loadData() {
 
-			String headerBill[] = {"Patient ID", "Name", "Date of Birth"};
-			DefaultTableModel dtmBill = new DefaultTableModel(headerBill, 0);
+			String headerPat[] = {"Patient ID", "Name", "Date of Birth"};
+			DefaultTableModel dtmPat = new DefaultTableModel(headerPat, 0);
 			
 			Vector<Patient> patients = PatientController.getInstance().getAllPatient();
 			for(Patient patient : patients) {
-				tableContentBill = new Vector<>();
-				tableContentBill.add(patient.getPatientID());
-				tableContentBill.add(patient.getName());
-				tableContentBill.add(patient.getDOB());
+				tableContentPat = new Vector<>();
+				tableContentPat.add(patient.getPatientID());
+				tableContentPat.add(patient.getName());
+				tableContentPat.add(patient.getDOB());
 				
-				dtmBill.addRow(tableContentBill);
+				dtmPat.addRow(tableContentPat);
 			}
 			
-			tableBill.setModel(dtmBill);
+			tablePat.setModel(dtmPat);
 			
 			String headerMed[] = {"Medicine ID", "Name", "Price","Stock"};
 			DefaultTableModel dtmMed = new DefaultTableModel(headerMed, 0);
@@ -289,13 +281,13 @@ public class DoctorView extends JFrame{
 			
 			Vector<PatientDetail> patientsDt = PatientController.getInstance().getPatientDetail(PatientID);
 			for(PatientDetail patientDt : patientsDt) {
-				tableContentDoc = new Vector<>();
-				tableContentDoc.add(patientDt.getPatientDetailID());
-				tableContentDoc.add(patientDt.getPatientID());
-				tableContentDoc.add(patientDt.getEmployeeID());
-				tableContentDoc.add(patientDt.getSymptom());
-				tableContentDoc.add(patientDt.getCheckDate());
-				dtmDoc.addRow(tableContentDoc);
+				tableContentPatDt = new Vector<>();
+				tableContentPatDt.add(patientDt.getPatientDetailID());
+				tableContentPatDt.add(patientDt.getPatientID());
+				tableContentPatDt.add(patientDt.getEmployeeID());
+				tableContentPatDt.add(patientDt.getSymptom());
+				tableContentPatDt.add(patientDt.getCheckDate());
+				dtmDoc.addRow(tableContentPatDt);
 			}
 			
 			
@@ -303,20 +295,20 @@ public class DoctorView extends JFrame{
 		}
 		
 		public void loadPatient(String Name){
-			String headerBill[] = {"Patient ID", "Name", "Date of Birth"};
-			DefaultTableModel dtmBill = new DefaultTableModel(headerBill, 0);
+			String headerPat[] = {"Patient ID", "Name", "Date of Birth"};
+			DefaultTableModel dtmPat = new DefaultTableModel(headerPat, 0);
 			
 			Vector<Patient> patients = PatientController.getInstance().searchPatient(Name);
 			for(Patient patient : patients) {
-				tableContentBill = new Vector<>();
-				tableContentBill.add(patient.getPatientID());
-				tableContentBill.add(patient.getName());
-				tableContentBill.add(patient.getDOB());
+				tableContentPat = new Vector<>();
+				tableContentPat.add(patient.getPatientID());
+				tableContentPat.add(patient.getName());
+				tableContentPat.add(patient.getDOB());
 				
-				dtmBill.addRow(tableContentBill);
+				dtmPat.addRow(tableContentPat);
 			}
 			
-			tableBill.setModel(dtmBill);
+			tablePat.setModel(dtmPat);
 		}
 		
 		public void loadMed(String Name){
