@@ -97,7 +97,7 @@ public class HrView extends JFrame implements ActionListener {
 		panelsouth.setLayout(new GridLayout(1,3,0,0));
 		panelsouth.add(insertButton);
 		panelsouth.add(updateButton);
-		panelsouth.add(fireButton);
+//		panelsouth.add(fireButton);
 		
 
 		add(panelnorth,BorderLayout.NORTH);

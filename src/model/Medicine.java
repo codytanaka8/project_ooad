@@ -120,6 +120,8 @@ public class Medicine {
 		return null;
 	}
 	
+
+	
 	public Medicine getMed(int id) {
 		String query = String.format("SELECT * FROM medicine WHERE MedicineID=?");
 		PreparedStatement ps = con.prepareStatement(query);
@@ -141,6 +143,8 @@ public class Medicine {
 		
 		return null;
 	}
+	
+	
 	
 	public boolean insert() {
 		//boolean kalau berhasil return true kalau gagal return false

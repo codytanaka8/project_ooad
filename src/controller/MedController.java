@@ -27,7 +27,7 @@ public class MedController {
 		return errorMsg;
 	}
 	
-	public void showPharmacistView() {
+	public void showPharmacistView( ) {
 		new PharmacistView();
 	}
 	
@@ -46,6 +46,9 @@ public class MedController {
 	public String getErrorMessage() {
 		return errorMsg;
 	}
+	
+	
+	
 	
 	public boolean insert( String name, int price, int qty) {
 		//validation

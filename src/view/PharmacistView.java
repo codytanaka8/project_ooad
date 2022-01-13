@@ -22,12 +22,15 @@ import model.Medicine;
 
 public class PharmacistView {
 	private JFrame frame;
-	private JTextField medTextField, nameTextField, priceTextField, stockTextField ;
+	private JTextField medTextField, nameTextField, priceTextField, stockTextField,empIdTextField,
+	patIdTextField,billIdTextField;
 	Vector<Object> listMed, listBill;
 
 	private JTable tableMed, tableBill;
+	private String employeeCurrentUsername;
 		
-	public PharmacistView() {
+	public PharmacistView( ) {
+
 	initialize();
 	}
 	
@@ -77,6 +80,34 @@ public class PharmacistView {
 		frame.getContentPane().add(medTextField);
 		medTextField.setColumns(10);
 		
+	
+		//5
+		JLabel lblEmployeeId = new JLabel("Employee Id");
+		lblEmployeeId.setBounds(400, 395, 101, 16);
+		frame.getContentPane().add(lblEmployeeId);
+
+		empIdTextField = new JTextField();
+		empIdTextField.setBounds(500, 390, 170, 26);
+		frame.getContentPane().add(empIdTextField );
+		
+		//6
+		JLabel lblPatientId = new JLabel("Patient Id");
+		lblPatientId.setBounds(400, 440, 101, 16);
+		frame.getContentPane().add(lblPatientId);
+
+		patIdTextField = new JTextField();
+		patIdTextField.setBounds(500, 435, 170, 26);
+		frame.getContentPane().add(patIdTextField );
+		
+		//7
+		JLabel lblBillId = new JLabel("Bill Id");
+		lblBillId.setBounds(400, 485, 101, 16);
+		frame.getContentPane().add(lblBillId);
+
+		billIdTextField = new JTextField();
+		billIdTextField.setBounds(500, 480, 170, 26);
+		frame.getContentPane().add(billIdTextField );
+		
 		
 		//2
 		JLabel lblNameLabel = new JLabel("Medicine Name");
@@ -110,6 +141,7 @@ public class PharmacistView {
 		frame.getContentPane().add(stockTextField );
 		
 		
+	
 		
 		
 		
@@ -127,11 +159,11 @@ public class PharmacistView {
 
 
 		JButton searchButton = new JButton("Search (By ID/Name)");
-		searchButton.setBounds(382, 523, 117, 29);
+		searchButton.setBounds(447, 625, 117, 29);
 		frame.getContentPane().add(searchButton);
 
 		JButton addtoBillButton = new JButton("Add To Bill");
-		addtoBillButton.setBounds(382, 473, 117, 29);
+		addtoBillButton.setBounds(382, 523, 117, 29);
 		frame.getContentPane().add(addtoBillButton);
 
 		loadData();
@@ -143,10 +175,11 @@ public class PharmacistView {
 				int row = 0;
 				row = tableMed.getSelectedRow();
 				lblIdLabel.setText(""+tableMed.getValueAt(row, 0));
-				medTextField.setText(""+tableMed.getValueAt(row, 2));
-				nameTextField.setText(""+tableMed.getValueAt(row, 4));
-				priceTextField.setText(""+tableMed.getValueAt(row, 3));
-				stockTextField.setText(""+tableMed.getValueAt(row, 4));
+				medTextField.setText(""+tableMed.getValueAt(row, 0));
+				nameTextField.setText(""+tableMed.getValueAt(row, 1));
+				priceTextField.setText(""+tableMed.getValueAt(row, 2));
+				stockTextField.setText(""+tableMed.getValueAt(row, 3));
+				
 			}
 			
 			public void mousePressed(MouseEvent e) {}
@@ -241,6 +274,7 @@ public class PharmacistView {
 				int price = Integer.parseInt(priceTextField.getText());
 				int stock = Integer.parseInt(stockTextField.getText());
 				
+				
 				if(MedController.getInstance().insert(name, price, stock)) {
 					JOptionPane.showMessageDialog(null, "Insert success!");
 				}
@@ -260,12 +294,15 @@ public class PharmacistView {
 				String name = nameTextField.getText();
 				String price = priceTextField.getText();
 				String stock = stockTextField.getText();
+				String employeeId = empIdTextField.getText();
+				String patientId = patIdTextField.getText();
+				String billId = patIdTextField.getText();
 				
-				if(BillController.getInstance().insertDetail(medId, price, stock)) {
+				if(BillController.getInstance().insert(employeeId,patientId , "CASH ONLY") && BillController.getInstance().insertDetail(billId, medId, stock)) {
 					JOptionPane.showMessageDialog(null, "Insert success!");
 				}
 				else {
-					JOptionPane.showMessageDialog(null, MedController.getInstance().getErrorMsg(), "Error Message", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, BillController.getInstance().getErrorMsg(), "Error Message", JOptionPane.ERROR_MESSAGE);
 				}
 				loadData();
 			}
