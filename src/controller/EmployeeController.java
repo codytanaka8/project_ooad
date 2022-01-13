@@ -1,9 +1,9 @@
-package src.controller;
+package controller;
 
 
 import java.util.Vector;
 
-import src.model.Employee;
+import model.Employee;
 
 
 public class EmployeeController {

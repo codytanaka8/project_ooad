@@ -1,4 +1,4 @@
-package src.view;
+package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,8 +15,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import src.controller.BillController;
-import src.model.BillDetail;
+import controller.BillController;
+import model.BillDetail;
 
 public class BillDetailView {
 	

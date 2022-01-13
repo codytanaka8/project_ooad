@@ -1,10 +1,10 @@
-package src.controller;
+package controller;
 
 import java.util.Vector;
 
-import src.model.Medicine;
-import src.view.PharmacistView;
-import src.view.AdminView;
+import model.Medicine;
+import view.PharmacistView;
+import view.AdminView;
 
 
 public class MedController {

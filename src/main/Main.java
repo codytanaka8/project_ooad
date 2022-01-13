@@ -1,26 +1,14 @@
-package src.main;
+package main;
 
 import java.awt.EventQueue;
 
-import src.controller.MedController;
-import src.controller.PatientController;
-import src.view.HrView;
-
-
-//import controllers.UserController;
+import controller.LoginController;
 
 public class Main {
 
 	public Main() {
-		//UserController.getInstance().showLoginForm();
-		//BillController.getInstance().showAdminView();
+		LoginController.getInstance().showLoginForm();
 
-//		new HrView();
-//		LoginController.getInstance().showLoginForm();
-
-		//LoginController.getInstance().showLoginForm();
-		MedController.getInstance().showPharmacistView();
-//		PatientController.getInstance().showDoctorView();
 
 	}
 	

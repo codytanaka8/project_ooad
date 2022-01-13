@@ -1,4 +1,4 @@
-package src.view;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,8 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import src.controller.EmployeeController;
-import src.model.Employee;
+import controller.EmployeeController;
+import model.Employee;
 
 public class InsertEmployeeView extends JFrame implements ActionListener{
 	JTextField namaField;

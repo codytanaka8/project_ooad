@@ -1,4 +1,4 @@
-package src.view;
+package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,10 +15,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import src.controller.BillController;
-import src.controller.MedController;
-import src.model.Bill;
-import src.model.Medicine;
+import controller.BillController;
+import controller.MedController;
+import model.Bill;
+import model.Medicine;
 
 public class PharmacistView {
 	private JFrame frame;

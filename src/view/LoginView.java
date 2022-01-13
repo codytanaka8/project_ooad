@@ -1,4 +1,4 @@
-package src.view;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -17,9 +17,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import src.controller.EmployeeController;
-import src.controller.MedController;
-import src.model.Employee;
+import controller.EmployeeController;
+import controller.MedController;
+import model.Employee;
 
 
 public class LoginView extends JFrame implements ActionListener {
